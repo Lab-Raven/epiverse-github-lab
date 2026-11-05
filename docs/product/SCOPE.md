@@ -1,13 +1,13 @@
-# Périmètre EpiVerse — référence de préparation, pas une preuve de livraison
+# Scénarios produits fictifs à démontrer avec GitHub
 
-Le LAB ne contient **pas** le code applicatif. Les parcours ci-dessous sont des exigences rappelées pour illustrer la traçabilité.
+**LAB PUBLIC ; les descriptions suivantes sont fictives et ne constituent ni exigences approuvées ni livraisons du projet EpiVerse réel.**
 
-- Profil et projets d'étudiants vérifiés ; événements et inscriptions.
-- Ressources, mentorat et carrière/recrutement (recruteurs validés, candidatures, entretiens).
-- Campus virtuel isométrique 2,5D, avatars et espaces personnalisables.
-- Échanges texte, audio/vidéo de proximité et visio d'entretien.
-- Navigateurs ordinateur et mobile en priorité ; publication native stores non obligatoire.
-- Cible discutée : 50 utilisateurs simultanés **au total** (à tester).
-- Objectif de préproduction évoqué : 5 février 2027, faisabilité à réestimer.
+Les Issues peuvent simuler des parcours :
+- Profil de démonstration et autorisations.
+- Réservation d'événement fictif.
+- Mentorat et annonces fictives.
+- Campus virtuel isométrique 2,5D de test, avec avatars et espaces.
+- Présence, salons audio, contrôles de confidentialité simulés.
+- API imaginaire, analyse de données de démonstration et règles de sécurité.
 
-Les 36 modules de vision long terme ne sont pas automatiquement tous dans le MVP. Stack frontend à confirmer avant de créer des jobs de compilation.
+Aucun objectif contractuel, chiffre de capacité réelle, date de livraison réelle ou architecture de production ne doit être déduit de ce document. Le LAB n'héberge aucune de ces fonctionnalités applicatives.
