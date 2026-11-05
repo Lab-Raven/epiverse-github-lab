@@ -1,41 +1,36 @@
-# GitHub Projects v2 — spécification du tableau privé
+# Project GitHub nº 1 — privé, lié à un LAB public
 
-Projet de test existant : https://github.com/orgs/Lab-Raven/projects/1, cible `EpiVerse — LAB privé (non officiel)`, propriétaire `Lab-Raven`, visibilité **PRIVATE**.
+Projet existant : [EpiVerse — LAB privé (non officiel)](https://github.com/orgs/Lab-Raven/projects/1), propriétaire Lab-Raven, **Private**.
 
-## Champs proposés
-| Champ | Type | Valeurs / consignes |
+**Ne pas créer de Project supplémentaire.** Les Issues importées depuis le repository public restent publiques.
+
+## Champs à tester
+
+| Champ | Type | Valeurs |
 |---|---|---|
-| Status | Single select | Backlog, Ready, In progress, Review, Testing, Blocked, Done |
-| Priority | Single select | P0 critique, P1 haute, P2 normale, P3 basse |
-| Type | Single select | Feature, Task, Bug, Risk, Documentation, Research, Decision |
-| Workstream | Single select | Product, Frontend, Backend, Campus 2.5D, Data, AI, Infra, Security, UX, QA |
-| Iteration | Iteration | Cycles de deux semaines, dates non officialisées |
-| Start date | Date | Début prévu |
-| Target date | Date | Date cible |
-| Estimate (h) | Number | Charge initiale |
-| Actual (h) | Number | Heures constatées |
-| ETC (h) | Number | Estimate to complete, jamais déduit naïvement |
-| Requirement ID | Text | LAB-REQ-001 |
-| WBS ID | Text | LAB-WBS-1.1 |
-| Evidence URL | Text | PR, commit, exécution CI, test |
+| Status | Sélection native | Backlog, Ready, In progress, Review, Testing, Blocked, Done |
+| Priority | Sélection | P0, P1, P2, P3 |
+| Type | Sélection | Feature, Task, Bug, Risk, Documentation, Research, Decision |
+| Workstream | Sélection | Product, Frontend, Backend, Campus 2.5D, Data, AI, Infra, Security, UX, QA, Governance |
+| Validation | Sélection | Not reviewed, In review, Accepted, Rejected |
+| Iteration | Itération native | Sprints de démonstration, durée configurable |
+| Start date / Target date | Date | A renseigner lors de l'exercice |
+| Estimate (h), Actual (h), ETC (h) | Nombre | Données fictives explicites |
+| Requirement ID, WBS ID, Evidence URL | Texte | Références LAB uniquement |
 
-Assignee est un champ natif des Issues : ne pas le recréer. Ne pas lier automatiquement un compte GitHub à un membre sans validation.
+## Vues
 
-## Vues à tester
-1. **Portfolio** : toutes les tâches, priorités, owners, charges et échéances.
-2. **Board** : Kanban par Status ; filtre Workstream.
-3. **Sprint** : itération courante, blocages et charge prévue/constatée.
-4. **Par membre** : regroupement Assignee (des exemples peuvent rester non attribués).
-5. **Roadmap** : chronologie dates de début/fin ; dépendances à documenter.
-6. **Risques** : Type=Risk ou label type:risk, revue, owner et plan de réponse.
-7. **Pédagogie** : livrables validés, preuves, écarts, ETC, décision prochaine période.
+Portfolio, Backlog, Kanban, Sprint, Roadmap, Par domaine, Par assignee, Risques, QA, Preuves, Pédagogie.
 
-## Automatisations
-Nouvelle Issue → Backlog. PR liée → Review (contrôler manuellement). Issue fermée → Done **seulement** après preuve/validation ; sinon conserver une étape de recette explicite.
+Créer une vue Table, Board ou Roadmap depuis l'interface du Project. Les vues de l'onglet Issues (**Issues Views**) sont distinctes.
 
-## Interface (non accessible au connecteur GitHub actuel)
-1. https://github.com/orgs/Lab-Raven/projects → **New project** → table → **Private**.
-2. Ne pas recréer de projet. Configurer les champs et vues de **#1**, dans la limite des capacités du plan.
-3. Ajouter les Issues LAB du dépôt, sans importer les tickets de l'organisation.
-4. Tester vue lecture seule et export des preuves.
-5. Confirmer indépendamment la confidentialité du Project.
+## Automatisation
+
+Après authentification GitHub CLI avec le scope `project` :
+
+```bash
+bash scripts/setup_projects.sh --dry-run
+bash scripts/setup_projects.sh --apply
+```
+
+Le script limite la cible au Project existant n° 1, le maintient PRIVATE, y ajoute les champs puis les tickets LAB. Il ne peut pas remplir les vues privées avec des données confidentielles : les sources Issues restent publiques.

@@ -1,28 +1,25 @@
-# Paramètres GitHub : cible de recette
+# Paramètres cibles du LAB public
 
-**Modèles de permissions :** ce dépôt personnel sert à simuler, mais ne reproduit pas les Teams et rôles d'une organisation GitHub.
-
-| Rubrique | État cible LAB | Preuve demandée |
+| Réglage | Cible | Validation |
 |---|---|---|
-| Visibility | PRIVATE, ne jamais changer | capture Settings / API |
-| Features: Issues | activé | liste des Issues |
-| Features: Projects | activé | Project privé lié |
-| Features: Discussions | activé si disponible | catégories et sujet test |
-| Features: Wiki | facultatif selon plan privé | page wiki test ou limite documentée |
-| Settings: Pull Requests | squash merge préféré ; auto-delete optionnel | paramètre constaté |
-| Settings: Actions | workflows GitHub autorisés ; `GITHUB_TOKEN` read-only par défaut | job minimal exécuté |
-| Rulesets | obligatoire après test de PR si privé et forfait le permet | essai négatif refusé |
-| Security | Dependabot activé ; scan de secrets/CodeQL selon forfait | alertes et policies observées |
-| Pages | **OFF** : pas de site public depuis un dépôt de test | Settings Pages |
-| Secrets | zéro secret de déploiement ; aucun PAT partagé | revue des noms, pas des valeurs |
-| Environments | aucun environnement de production / staging réel | inventaire |
-| GitHub Apps | accès minimal ; aucun miroir vers l'équipe | inventaire des apps |
-| Codespaces | facultatif, selon forfait et dépenses | test d'ouverture isolé |
-| Copilot | aide au développement facultative, jamais merge sans revue humaine | politique dans docs |
-| Releases | release draft interne seulement après CI | lien + validation |
-| Packages | aucun GHCR public | visibilité vérifiée avant publication expérimentale |
+| Repository visibility | PUBLIC, souhait explicite | API GitHub et UI |
+| GitHub Project #1 | PRIVATE | Settings du Project |
+| Issues | Activé, données fictives | Issues |
+| Discussions | Activé, annonce épinglée | Discussions |
+| Wiki | Activé, Home présente | Wiki |
+| Actions | Actif, tests exécutés | Actions |
+| Rulesets | Protection main pour dépôt public | Settings → Rules |
+| Dependabot | Updates et alerts activées | Security |
+| CodeQL | Default setup et scan réel | Security / Actions |
+| Secret scanning | Alertes et Push Protection activées | Security |
+| Pages | Site de démonstration public, option manuelle | Settings → Pages |
+| Releases | Brouillons de test uniquement | Releases |
+| Packages | Aucune publication par défaut | Packages |
+| Auto-merge | Désactivé pour les agents et les PR risquées | Settings |
+| Branch deletion | Suppression de branche après fusion, selon choix | Settings |
+| CODEOWNERS | Propriétaire du LAB ; revue externe non simulée | Fichier + PR |
+| Environments | `lab-simulation`, sans secret | Settings |
+| Teams | Équipes fictives vides, pas de vrais membres | Organisation |
+| Billing | Pas de souscription/achat automatique | Billing |
 
-Attention : la possibilité de configurer rulesets/protection sur un **dépôt privé** dépend du forfait (Pro/Team/Enterprise). Aucun changement de visibilité automatique.
-
-## Différences entre le LAB et la vraie organisation
-Teams, rôles d'accès granulaires et demandes d'approbation indépendantes ne se testent pas honnêtement avec un seul compte propriétaire : documenter "non vérifié" plutôt que "validé".
+Un repository public peut rendre accessibles historique, Issues, discussions, Wiki et les artefacts publiés. Le Project privé ne protège pas le contenu source des Issues publiques.
