@@ -1,0 +1,26 @@
+name: "[LAB] Incident / SRE"
+description: "Consigner un incident réellement observé dans le laboratoire"
+title: "[LAB][INCIDENT] "
+labels: ["type:bug", "domain:devops"]
+body:
+  - type: textarea
+    id: observations
+    attributes:
+      label: Symptômes, horodatage et liens de preuves
+      description: Ne jamais coller un token, un secret ou des données personnelles.
+    validations:
+      required: true
+  - type: textarea
+    id: effect
+    attributes:
+      label: Impact utilisateur / système
+    validations:
+      required: true
+  - type: textarea
+    id: hypotheses
+    attributes:
+      label: Hypothèses et tests de diagnostic
+  - type: textarea
+    id: remedy
+    attributes:
+      label: Containment, correction, validation et prévention

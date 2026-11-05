@@ -1,0 +1,21 @@
+name: "[LAB] Suivi pédagogique"
+description: "Préparer une démonstration et ses preuves"
+title: "[LAB][PEDAGO] "
+labels: ["type:task", "domain:governance"]
+body:
+  - type: textarea
+    id: target
+    attributes:
+      label: Critère pédagogique ou jalon
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Liens WBS, Issue, PR, tests, livraison et Delta Log
+    validations:
+      required: true
+  - type: textarea
+    id: gap
+    attributes:
+      label: Écart, cause et prochain contrôle

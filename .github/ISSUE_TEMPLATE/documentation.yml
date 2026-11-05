@@ -1,0 +1,21 @@
+name: "[LAB] Documentation / ADR"
+description: "Mise à jour d'un document, standard, décision ou procédure"
+title: "[LAB][DOC] "
+labels: ["type:task", "domain:governance"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Document et incohérence à résoudre
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources datées et preuves
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critères de correction / revue

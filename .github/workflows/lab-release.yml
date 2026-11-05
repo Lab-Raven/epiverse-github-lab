@@ -1,0 +1,29 @@
+name: LAB - Préparer une release brouillon
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Uniquement v0.0.N-lab, release interne brouillon"
+        required: true
+        default: v0.0.1-lab
+permissions:
+  contents: write
+jobs:
+  draft:
+    if: github.repository == 'estellegiroud/epiverse-github-lab'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Préparer une draft prerelease (pas de publication)
+        env:
+          TAG: ${{ inputs.tag }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          [[ "$TAG" =~ ^v0\.0\.[0-9]+-lab$ ]] || { echo "Tag non LAB refusé"; exit 1; }
+          [ "$(gh api "repos/$GITHUB_REPOSITORY" --jq '.private')" = "true" ] || exit 1
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 && {
+            echo "Release existante ; aucune modification"; exit 0;
+          }
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --draft --prerelease             --title "LAB $TAG — démonstration non officielle"             --notes "Release brouillon interne, sans code applicatif ni validation du projet réel. CI #7 à résoudre avant qualification."
+          echo "Brouillon conservé ; aucune publication automatique." >> "$GITHUB_STEP_SUMMARY"
