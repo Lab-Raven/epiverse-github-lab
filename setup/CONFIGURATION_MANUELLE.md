@@ -14,6 +14,9 @@ gh auth status
 gh auth refresh -s project
 git clone https://github.com/Lab-Raven/epiverse-github-lab.git
 cd epiverse-github-lab
+# Tant que la PR #35 n’est pas fusionnée : utiliser sa branche de configuration.
+git fetch origin fix/lab-raven-org-migration
+git switch fix/lab-raven-org-migration
 bash scripts/setup_projects.sh --dry-run
 bash scripts/setup_projects.sh --apply
 ```
