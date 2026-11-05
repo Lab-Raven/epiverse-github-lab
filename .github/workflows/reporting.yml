@@ -19,7 +19,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
         run: |
-          test "$REPO" = "estellegiroud/epiverse-github-lab"
+          test "$REPO" = "Lab-Raven/epiverse-github-lab"
           python scripts/generate_report.py --github --repo "$REPO" --output reporting/lab-current.md
           cat reporting/lab-current.md >> "$GITHUB_STEP_SUMMARY"
       - name: Conserver le rapport comme artefact
