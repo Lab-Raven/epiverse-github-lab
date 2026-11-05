@@ -1,5 +1,9 @@
 name: LAB - Initialiser labels et jalons
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/setup-lab.yml'
   workflow_dispatch:
 permissions:
   contents: read
