@@ -1,57 +1,49 @@
-# EpiVerse — GitHub Governance LAB (non officiel)
+# EpiVerse — GitHub LAB public (non officiel)
 
-> **ENVIRONNEMENT DE TEST.** Ce dépôt sert à tester GitHub, pas à héberger ni à livrer l'application EpiVerse. Les scénarios et métriques de démonstration sont fictifs. **Ne jamais synchroniser ou pousser vers `epiverse-epitech/epiverse`.**
+> **LABORATOIRE PUBLIC — DONNÉES FICTIVES.** Ce dépôt sert à expérimenter l'écosystème GitHub, pas à héberger l'application EpiVerse ni à démontrer que ses fonctionnalités sont livrées.
 
-## Confidentialité : priorité absolue
+## Visibilité et périmètre
 
-**Contrôle API du 5 novembre 2026 : dépôt PUBLIC.** Le laboratoire était censé être privé. Avant de renseigner la moindre information supplémentaire sur des personnes, du code non public ou des activités internes, passer ce dépôt en **PRIVATE** :
+- **Repository : PUBLIC intentionnellement** pour tester les fonctions GitHub Free accessibles aux dépôts publics (rulesets, CodeQL, Wiki, Pages et collaboration).
+- **Project d'organisation n° 1 : PRIVATE**. [EpiVerse — LAB](https://github.com/orgs/Lab-Raven/projects/1).
+- **Issues et PR : PUBLIQUES**, même si elles sont liées à un Project privé.
+- Jamais de clés, documents internes, identifiants personnels non autorisés, exports privés ou données de l'équipe réelle.
+- **Aucune synchronisation ni modification du dépôt officiel `epiverse-epitech/epiverse`.**
 
-[Paramètres du dépôt → General → Danger Zone → Change repository visibility](../../settings)
+**Avertissement de sécurité :** de premières révisions publiques ont contenu des noms de membres réels. Modifier les fichiers actuels ne supprime pas ces versions historiques. Le contenu de l'historique public et des tickets doit faire l'objet d'une revue humaine spécifique.
 
-La confidentialité réelle doit être **recontrôlée dans GitHub**. Ne pas ajouter de secrets, tokens, dossiers RH, livrables internes ou exports Jira/Notion dans ce dépôt tant qu'il est public.
+## Tester les fonctionnalités GitHub
 
-## Avancement vérifié
-
-| Composant | État |
+| Fonction | Accès |
 |---|---|
-| Repository / Git / branches | Disponible, dépôt dans l'organisation Lab-Raven |
-| Issues et labels | Tickets d'essai créés, aucune réalisation de produit prétendue |
-| Pull Requests | [PR de démonstration #6](../../pull/6), puis PR de migration de configuration |
-| GitHub Actions | CI Python, contrôle documentaire et test minimal **exécutés avec succès** après les échecs initiaux |
-| Politique PR | Correctif de migration en cours : anciennes références de dépôt |
-| Dependabot | Configuration active, PR de mise à jour d'Actions créées |
-| Discussions et Wiki | Options activées au niveau du repository ; contenus à organiser |
-| Projects v2 | Projet et vues d'organisation à créer ou vérifier séparément |
-| Milestones et champs | Scripts d'initialisation prévus ; activation effective à vérifier |
-| Teams et permissions | Dépendent de l'organisation, aucune attribution de rôle à une personne non confirmée |
-| Rulesets, sécurité native | À activer/éprouver selon forfait et confidentialité du dépôt |
+| Code, branches | [Code](../../) |
+| Backlog, bugs et risques | [Issues](../../issues) |
+| Revue et CI | [Pull Requests](../../pulls) |
+| Automatisations / rapports | [Actions](../../actions) |
+| Kanban, roadmap, sprints | [Project n° 1 (privé)](https://github.com/orgs/Lab-Raven/projects/1) |
+| Sécurité / CodeQL / Dependabot | [Security](../../security) |
+| Échanges | [Discussions](../../discussions) |
+| Documentation publique | [Wiki](../../wiki) |
+| Activité et métriques du LAB | [Insights](../../pulse) |
 
-Pour l'état précis et les preuves, consulter [Actions](../../actions), [Issues](../../issues), [PR](../../pulls) et [matrice de couverture](setup/FEATURE_COVERAGE.md).
+## Documentation
 
-## Dossiers
+- [Équipe fictive](docs/governance/TEAM.md) et [RACI fictive](docs/governance/RACI.md)
+- [Décisions de LAB](docs/governance/DECISIONS.md)
+- [Definition of Done](docs/quality/DoD.md)
+- [Traçabilité des scénarios](docs/governance/TRACEABILITY_MATRIX.md)
+- [Configuration du Project](setup/PROJECTS.md) et [vues](setup/PROJECTS_VUES.md)
+- [Installation](setup/CONFIGURATION_MANUELLE.md) et [sécurité](docs/quality/SECURITY_CONTROLS.md)
 
-- [Gouvernance et RACI provisoire](docs/governance/TEAM.md)
-- [Décisions](docs/governance/DECISIONS.md)
-- [Exigences d'exemple](docs/product/SCOPE.md)
-- [Tests, DoD et preuves](docs/quality/DoD.md)
-- [Sécurité et incidents](docs/security/THREAT_MODEL.md)
-- [Pilotage Projects](setup/PROJECTS.md)
-- [Vues Kanban, sprints, roadmap, qualité](setup/PROJECTS_VUES.md)
-- [Guide de configuration globale](setup/INSTALLATION_COMPLETE.md)
-- [Critères de recette](setup/CRITERES_ACCEPTATION.md)
-- [Plan de transfert après validation](setup/TRANSFERT_OFFICIEL.md)
-- [Rapports, charges, ETC et Delta Log](reporting/README.md)
-
-## Commandes de test (sans dépendance applicative)
+## Vérifications locales
 
 ```bash
 python3 scripts/verify_lab.py
 python3 -m unittest discover -s tests -v
-python3 scripts/generate_report.py --demo --output reporting/demo-status.md
-python3 scripts/bootstrap_lab.py --dry-run
-bash scripts/setup_projects.sh --dry-run
+python3 scripts/public_lab_guard.py
+bash scripts/complete_lab.sh --dry-run
 ```
 
-**Pour configurer les Project/labels via CLI**, authentifier `gh` avec les droits adaptés puis utiliser les versions `--apply` **uniquement après confirmation de la visibilité privée**. Ne pas envoyer de jeton GitHub dans ChatGPT.
+Le scanner de publication est **heuristique** : une revue humaine des modifications demeure obligatoire. Les automatisations de configuration sont limitées à ce laboratoire et les opérations sensibles nécessitent des confirmations.
 
-Les membres et les rôles présents dans les documents sont une **base provisoire à confirmer**, pas des identités GitHub, invitations ou responsabilités approuvées.
+**Créer des Issues, passer la CI ou produire un rapport ne prouve pas une fonctionnalité EpiVerse développée.**

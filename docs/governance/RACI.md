@@ -1,17 +1,20 @@
-# Matrice RACI — PROPOSITION NON VALIDÉE
+# Matrice RACI fictive du LAB
 
-**A** accountable (une personne responsable finale), **R** réalise, **C** consulté, **I** informé. **A fonctionnel ≠ privilège administrateur GitHub.**
+**Simulation ; aucun rôle ni responsable réel n'est nommé ou validé.**
 
-| Domaine / décision | A | R proposés | C |
+R = réalise ; A = responsable final ; C = consulté ; I = informé.
+
+| Sujet | A | R | C |
 |---|---|---|---|
-| Vision, priorités et arbitrages | Estelle | Estelle | Leads concernés |
-| Planning et suivi pédagogique | Estelle | À nommer | Tous |
-| Frontend | Estelle (acceptation produit) | Soumia, Philimon | Eckson, Julien |
-| Backend/API | Estelle (acceptation produit) | Eckson | Data, sécurité |
-| Monde 2,5D | Estelle | Estelle, Julien | Frontend, infra |
-| Infra / CI/CD | Estelle (go/no-go) | Baye (à confirmer) | Eckson |
-| Données / IA | Estelle (produit/conformité) | Belaid, Lina, Thomas (à confirmer) | Eckson |
-| Sécurité / conformité | Estelle | Responsable de lot à nommer | Leads |
-| Release et acceptation | Estelle | Responsable de lot à nommer | QA, infra |
+| Priorités produit | LAB-PO | LAB-PM | LAB-FE, LAB-BE |
+| GitHub Projects / sprints | LAB-PM | LAB-PM | LAB-PO, LAB-QA |
+| Application web/mobile | LAB-PO | LAB-FE | LAB-BE |
+| API / backend | LAB-PO | LAB-BE | LAB-DATA |
+| Monde virtuel 2,5D | LAB-PO | LAB-WORLD | LAB-FE, LAB-OPS |
+| CI/CD / infrastructure | LAB-PO | LAB-OPS | LAB-QA |
+| Données / IA | LAB-PO | LAB-DATA, LAB-AI | LAB-BE |
+| Sécurité et conformité | LAB-PO | LAB-OPS, LAB-QA | LAB-BE |
+| Recette et preuves | LAB-PO | LAB-QA | Autres rôles |
+| Release de démonstration | LAB-PO | LAB-OPS | LAB-QA |
 
-Cette matrice décrit des intentions, pas des tâches affectées. Aucun droit n'est distribué automatiquement.
+Cette matrice ne confère aucun droit GitHub.

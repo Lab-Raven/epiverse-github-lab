@@ -9,9 +9,9 @@ if [ "$MODE" != "--apply" ] && [ "$MODE" != "--dry-run" ]; then
   echo "Usage: bash scripts/setup_projects.sh --dry-run|--apply" >&2
   exit 2
 fi
-echo "CIBLE UNIQUE : $REPO ; Project privé : $TITLE"
+echo "CIBLE UNIQUE : $REPO (public autorisé) ; Project privé : $TITLE"
 if [ "$MODE" = "--dry-run" ]; then
-  echo "DRY-RUN : vérifier authentification, créer/mettre à jour Project privé."
+  echo "DRY-RUN : réutiliser exclusivement le Project #1 et le maintenir privé."
   echo "DRY-RUN : lier au dépôt LAB ; champs Type/Priority/Workstream/Validation/Estimate/Actual/ETC/Requirement/WBS/Evidence."
   echo "DRY-RUN : ajouter les Issues LAB et PR de test ; ne pas modifier les dépôts d'équipe."
   exit 0
@@ -19,20 +19,33 @@ fi
 command -v gh >/dev/null || { echo "GitHub CLI (gh) absent" >&2; exit 3; }
 command -v jq >/dev/null || { echo "jq absent" >&2; exit 3; }
 [ "$(gh api user --jq '.login')" = "estellegiroud" ] || { echo "Mauvais compte connecté" >&2; exit 4; }
-[ "$(gh api "repos/$REPO" --jq '.private')" = "true" ] || { echo "Dépôt non privé : abandon" >&2; exit 4; }
+gh api "repos/$REPO" --jq '.full_name' | grep -Fxq "$REPO" || { echo "Dépôt inattendu" >&2; exit 4; }
+echo "Repository LAB public intentionnel ; le Project #1 sera maintenu PRIVATE."
 echo "GitHub CLI doit disposer du scope 'project' (gh auth refresh -s project)."
 printf "Taper INSTALLER LAB pour confirmer : "
 read -r ANSWER
 [ "$ANSWER" = "INSTALLER LAB" ] || { echo "Annulé"; exit 5; }
-NUMBER="$(gh project list --owner "$OWNER" --format json --jq '.projects[]? | select(.title == "EpiVerse — LAB privé (non officiel)") | .number' | head -n 1)"
-if [ -z "$NUMBER" ]; then
-  NUMBER="$(gh project create --owner "$OWNER" --title "$TITLE" --format json --jq '.number')"
-  echo "Project créé : $NUMBER"
-else
-  echo "Project existant réutilisé : $NUMBER"
-fi
-[ -n "$NUMBER" ] || { echo "Numéro de Project non obtenu" >&2; exit 6; }
-gh project edit "$NUMBER" --owner "$OWNER" --visibility PRIVATE --description "LAB privé de simulation des rituels EpiVerse, sans aucune métrique produit ni membre invité."
+# Le Project #1 a déjà été créé par l'utilisatrice dans Lab-Raven (5 novembre 2026).
+# Réutiliser exclusivement ce Project : aucun nouveau Project créé automatiquement.
+NUMBER="1"
+CURRENT_TITLE="$(gh project view "$NUMBER" --owner "$OWNER" --format json --jq '.title')" || {
+  echo "Impossible de lire le Project #1 : vérifier le scope project et les droits dans Lab-Raven." >&2
+  exit 6
+}
+case "$CURRENT_TITLE" in
+  "$TITLE"|"EpiVerse — LAB privé"|*"untitled project"*)
+    echo "Project #1 reconnu : $CURRENT_TITLE"
+    ;;
+  *)
+    echo "Refus de renommer le Project #1 : titre inattendu ($CURRENT_TITLE)." >&2
+    echo "Examiner https://github.com/orgs/Lab-Raven/projects/1 avant toute modification." >&2
+    exit 7
+    ;;
+esac
+gh project edit "$NUMBER" --owner "$OWNER" --title "$TITLE" --visibility PRIVATE \
+  --description "Laboratoire privé de gouvernance, planification, CI/CD et sécurité GitHub EpiVerse (non officiel)." \
+  --readme "$(cat setup/PROJECT_README.md)"
+echo "Projet Lab-Raven #1 renommé et visibilité PRIVATE demandée."
 gh project link "$NUMBER" --owner "$OWNER" --repo "$REPO" || echo "Lien déjà présent ou à contrôler dans l'interface."
 has_field() {
   gh project field-list "$NUMBER" --owner "$OWNER" --format json --jq '.fields[].name' | grep -Fxq "$1"

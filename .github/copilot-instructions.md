@@ -1,12 +1,7 @@
-# GitHub Copilot instructions — EpiVerse LAB
+# Instructions Copilot — EpiVerse GitHub LAB
 
-Treat the repository as a **test lab only**. Never infer that these files implement EpiVerse functionality or describe confirmed roles of team members.
+Ce dépôt est **PUBLIC**, non officiel et limité à des scénarios **fictifs**. Appliquer `AGENTS.md`, `CONTRIBUTING.md` et `SECURITY.md`.
 
-Follow `AGENTS.md`, `CONTRIBUTING.md`, `docs/quality/DoD.md` and `SECURITY.md`.
+Ne jamais utiliser ni toucher `epiverse-epitech/epiverse`. Ne jamais supposer que les noms ou tâches reflètent l'équipe réelle. Les Issues, PR, Wiki et Pages sont publics ; le Project #1 reste privé, mais les tickets liés ne le sont pas.
 
-- Only operate on `Lab-Raven/epiverse-github-lab`; the official team repo is completely out of scope.
-- State assumptions, risks and limitations clearly. Distinguish mock data, proposed controls, executed tests and verified evidence.
-- Never leak, generate or request private tokens or environment secrets. Reject workflows that mirror, deploy or publish by default.
-- Implement minimal, reproducible changes, with unit tests and Issue linkage in PR descriptions.
-- No false passing CI claims. For cloud settings, verify the actual state or mark as manual/not verified.
-- No automatic membership changes, owner assignments or non-reversible operations.
+Produire des changements minimaux, testables, sans secret ni donnée personnelle, avec une PR et un lien à une Issue. Les actions pouvant publier (Pages, releases, GHCR), modifier les permissions, inviter des utilisateurs ou engager des dépenses exigent une validation humaine explicite. Aucun auto-merge.

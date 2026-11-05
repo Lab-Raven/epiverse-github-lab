@@ -1,24 +1,19 @@
-# Équipe EpiVerse — état provisoire (LAB)
+# Équipe fictive du LAB public EpiVerse
 
-Sources : conversations et documents EpiVerse, compte rendu consolidé du 4 novembre 2026.
+**IDENTITÉS ET AFFECTATIONS FICTIVES.** Ce document ne décrit pas l'équipe EpiVerse réelle.
 
-**Cette liste n'accorde aucun droit GitHub et ne constitue pas une validation des affectations individuelles.**
-
-| Personne | Attribution retrouvée | Vérification nécessaire |
+| Identifiant de test | Responsabilité simulée | Permission cible simulée |
 |---|---|---|
-| Estelle Giroud | Direction exclusive, produit, arbitrage, sécurité, participation 2,5D | Compte @estellegiroud confirmé |
-| Soumia Michel | Frontend ; **pas de management ni coordination** | Périmètre UX/UI à confirmer |
-| Eckson Glitho | Backend / NestJS | Compte et engagement à confirmer |
-| Philimon Rusom | Frontend | Compte et engagement à confirmer |
-| Julien Lefebvre | Campus 2,5D avec Estelle | Mobile ? à confirmer |
-| Baye Ousmane Beye | Infra/CI/CD (contribution observée) | Responsabilité et compte à confirmer |
-| Belaid Ioudjaoudene | Data / BDD (historique) | Missions actuelles à confirmer |
-| Lina Laddada | Analytics / Data (historique) | Missions actuelles à confirmer |
-| Thomas Pradeau | Data / IA (historique) | Missions actuelles à confirmer |
+| LAB-PO | Pilotage produit et arbitrages | Admin |
+| LAB-PM | Coordination et planning | Maintain |
+| LAB-FE | Application web/mobile | Write |
+| LAB-BE | API / Backend | Write |
+| LAB-WORLD | Campus virtuel 2,5D | Write |
+| LAB-OPS | Infrastructure / CI/CD | Write |
+| LAB-DATA | Données et analytique | Write |
+| LAB-AI | IA et modèles | Write |
+| LAB-QA | Qualité / recette | Triage |
 
-Anciens membres : Patrick Brugiere, Hugo Fleury. Garder l'historique de leurs contributions, pas de nouvelle attribution automatique.
+Ces identifiants ne correspondent à aucun compte GitHub, aucune invitation n'est envoyée et aucun accès n'est attribué. Les permissions sont des scénarios de test, non des droits réellement accordés.
 
-## Recueil individuel avant portage
-Pseudonyme GitHub vérifié ; rôle principal ; binôme/relais ; disponibilité hebdomadaire ; absence prévue ; compétences vérifiées ; lot confié ; critères de livraison.
-
-**Conflit documentaire :** plusieurs DOC de juin 2026 attribuent à tort le management à Soumia ; la correction de gouvernance prévaut.
+**Historique :** les premières versions publiques du laboratoire contenaient des noms réels. Leur remplacement ici n'efface pas leurs versions historiques ni les éventuels forks ou copies. Révision de l'historique uniquement sur décision distincte.

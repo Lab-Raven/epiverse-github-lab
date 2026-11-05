@@ -1,0 +1,28 @@
+name: LAB - Contrôle de publication
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public-lab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Contrôler le dépôt ciblé et afficher sa visibilité
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          test "$REPO" = "Lab-Raven/epiverse-github-lab"
+          visibility="$(gh api "repos/$REPO" --jq '.visibility')"
+          case "$visibility" in public|private) ;; *) echo "::error::Visibilité inattendue"; exit 1;; esac
+          echo "## LAB GitHub — visibilité : $visibility" >> "$GITHUB_STEP_SUMMARY"
+          echo "Données fictives uniquement, contrôle heuristique et revue humaine obligatoires." >> "$GITHUB_STEP_SUMMARY"
+      - name: Rechercher des signatures de données sensibles et classifier les documents
+        run: python3 scripts/public_lab_guard.py

@@ -1,9 +1,11 @@
-# Politique d'accès — laboratoire
+# Politique d'accès du LAB
 
-- Propriétaire : `estellegiroud` ; dépôt `Lab-Raven/epiverse-github-lab`, **PRIVATE**.
-- **Cible interdite** de toute automatisation de ce LAB : `epiverse-epitech/epiverse`.
-- Aucune invitation des autres membres, aucun mapping nominatif des comptes tant que les identités et rôles ne sont pas validés.
-- Ne pas stocker de clé, token, identifiant produit, dossier secret, donnée personnelle ni contenu propriétaire de l'équipe.
-- Ne pas activer GitHub Pages ni un registry public ; les environnements de test ne déploient rien.
-- Dans un dépôt personnel, les collaborateurs ne reçoivent pas les mêmes permissions qu'une équipe d'organisation ; simuler et documenter les écarts plutôt que les masquer.
-- La version officielle ne recevra **aucune** modification sans approbation supplémentaire explicite.
+- Repository : `Lab-Raven/epiverse-github-lab`, **PUBLIC intentionnellement**.
+- Project GitHub #1 : **PRIVATE**.
+- Le propriétaire et les contributeurs visibles dans les commits ne constituent pas une liste des membres de l'équipe EpiVerse.
+- **Aucun accès ni invitation à une personne réelle** sans approbation.
+- Ne pas recopier secrets, données personnelles, livrables internes ou exports d'outils connectés dans le LAB.
+- Les Issues/PR du dépôt public restent publiques, même liées à un Project privé.
+- N'automatiser aucun push, miroir ou transfert vers `epiverse-epitech/epiverse`.
+- Pages, Discussions, Releases et Packages peuvent publier des données ; vérifier ce qui est effectivement public avant activation.
+- L'historique public peut rester accessible après retrait d'un fichier de la branche courante.

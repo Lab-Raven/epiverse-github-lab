@@ -1,51 +1,89 @@
-# Actions manuelles indispensables pour terminer GitHub LAB
+# Configuration restante — GitHub LAB public
 
-**Précondition :** dépôt `Lab-Raven/epiverse-github-lab` privé, GitHub CLI authentifié au compte autorisé. Ces étapes changent le dépôt du LAB, jamais celui de l'équipe.
+## État vérifié (5 novembre 2026)
 
-## A. Priorité P0 : rendre le dépôt PRIVATE
-- https://github.com/Lab-Raven/epiverse-github-lab/settings → **General → Danger Zone → Change repository visibility → Make private**.
-- Alternative depuis un terminal déjà authentifié : `gh repo edit Lab-Raven/epiverse-github-lab --visibility private --accept-visibility-change-consequences`.
-- Vérifier : `gh repo view Lab-Raven/epiverse-github-lab --json isPrivate --jq .isPrivate` retourne `true`.
-- Important : rendre privé n'efface pas une exposition passée ; examiner historique, forks, liens et secrets éventuellement publiés.
+- **Repository** : `Lab-Raven/epiverse-github-lab` en **PUBLIC par choix**, pour tester les fonctionnalités GitHub Free.
+- **Project de l'organisation #1** : `EpiVerse — LAB privé (non officiel)`, **PRIVATE**, actuellement vide ; ne pas en créer un autre.
+- **Discussions** : première annonce `[LAB] Bienvenue — règles, idées et suivi` créée et épinglée.
+- **Wiki** : première page Home créée ; son contenu indique encore à tort que le dépôt doit être privé.
+- **GitHub Security** : Dependabot alerts, CodeQL, private vulnerability reporting et secret scanning alerts affichés **Enabled** ; Push Protection activée.
+- **Branche main** : aucune protection/ruleset observé.
+- **Labels** : 32 labels, à compléter/normaliser ; **Milestones : 0** ; **Issues Views : 0**.
+- **PR #36** : corrige la politique de publication et la compatibilité du LAB public ; ne pas fusionner avant succès de ses contrôles.
 
-## B. Finaliser Projects v2 pour l'organisation
+Le Project PRIVATE ne masque pas ses Issues/PR provenant du dépôt PUBLIC. Ne pas mettre d'informations secrètes dans les tickets.
+
+## A. GitHub Project #1 — automatisation et vues
+
+Lien : https://github.com/orgs/Lab-Raven/projects/1
+
+Le script `scripts/setup_projects.sh --apply` réutilise **uniquement le Project #1** : titre, README, visibilité PRIVATE, lien au dépôt, champs et import des tickets du LAB. Il n'est pas accessible à l'application GitHub intégrée de ce chat ; exécuter depuis GitHub CLI avec le scope `project`.
+
 ```bash
-gh auth status
+brew install gh jq
+gh auth login
 gh auth refresh -s project
-git clone https://github.com/Lab-Raven/epiverse-github-lab.git
+gh repo clone Lab-Raven/epiverse-github-lab
 cd epiverse-github-lab
-# Tant que la PR #35 n’est pas fusionnée : utiliser sa branche de configuration.
-git fetch origin fix/lab-raven-org-migration
-git switch fix/lab-raven-org-migration
-bash scripts/setup_projects.sh --dry-run
-bash scripts/setup_projects.sh --apply
+bash scripts/complete_lab.sh --dry-run
+bash scripts/complete_lab.sh --apply
 ```
-- Ouvrir https://github.com/orgs/Lab-Raven/projects et vérifier que le Project est **PRIVATE**.
-- Compléter les 10 vues et champs `Status`, `Iteration` dans l'interface (voir `setup/PROJECTS_VUES.md`).
 
-## C. Labels, milestones et paramètres
-```bash
-python3 scripts/bootstrap_lab.py --dry-run
-python3 scripts/bootstrap_lab.py --apply
-bash scripts/setup_repo_features.sh --dry-run
-bash scripts/setup_repo_features.sh --apply
-```
-- Contrôler `Settings → Actions → General` et `Settings → Rules`. Sur un dépôt privé GitHub Free, l'application des rulesets de branche peut demander un abonnement Pro/Team/Enterprise ; ne pas souscrire sans décision.
-- **Discussions** et **Wiki** sont activés au niveau du dépôt lors de l'audit du 5 novembre ; créer une catégorie et un sujet de test, puis une page Wiki, sans données internes.
-- Vérifier `Settings → Code security` (Dependabot alerts, secret scanning, CodeQL selon plan). Ne pas activer de facturation supplémentaire automatiquement.
+Après exécution, créer les vues Table / Board / Roadmap dans l'interface : Portfolio, Backlog, Kanban, Sprint, Roadmap, Par domaine, Par membre **fictif uniquement**, Risques, QA, Preuves, Pédagogie. Les options `Status` et `Iteration` natives doivent être réglées manuellement.
 
-## D. Tester le cycle de vie
-- PR → CI verte → revue par un compte différent (seulement si invité avec consentement) → merge → fermeture de l'Issue.
-- Vérifier `Actions`, `Insights`, `Security`, `Releases` et les artefacts de rapport.
-- Pour Codespaces : `Code → Codespaces → Create codespace on main`, mesurer la consommation, supprimer après essai.
-- Tester une release **DRAFT** du LAB uniquement après contrôles ; aucun déploiement ni GHCR public.
-- Ne pas activer Pages sur ce LAB privé ; une vitrine publique doit être un dépôt séparé, après sélection de contenus publiables.
+## B. Labels et Milestones
 
-## E. Équipe et droits
-- Organisation : https://github.com/organizations/Lab-Raven/settings/profile
-- Teams : https://github.com/orgs/Lab-Raven/teams
-- Décider des équipes de test `product`, `frontend`, `backend`, `data`, `platform-security`, `qa`, puis créer avec des rôles minimaux. **Ne pas ajouter les vrais membres** avant confirmation de leurs comptes et de leur consentement.
-- Relire `docs/governance/TEAM.md` et `docs/governance/RACI.md` avant toute décision sur l'équipe réelle.
+Dans **Actions → LAB - Initialiser labels et jalons → Run workflow** (workflow disponible après fusion de PR #36), déclencher manuellement. Il synchronise les labels et crée trois jalons fictifs :
 
-## F. Critères de recette
-L'ensemble est prêt seulement lorsque les réglages privés, le Project, les champs/vues, les tickets, les revues, les alertes de sécurité et les runs CI ont été **observés**, et non seulement documentés. Consigner les preuves dans `docs/quality/EVIDENCE.md`.
+- [LAB] Sprint 0 — gouvernance
+- [LAB] Sprint 1 — qualité et PR
+- [LAB] Recette pédagogique
+
+Aucune date n'est inventée. Alternative locale : `python3 scripts/bootstrap_lab.py --apply`.
+
+## C. Branch protection / Rulesets — public GitHub Free
+
+https://github.com/Lab-Raven/epiverse-github-lab/settings/rules
+
+Créer un **Branch ruleset** pour la branche `main`, après l'intégration du kit :
+- Ruleset name : `LAB — main protected`
+- Enforcement : `Disabled` pour commencer, puis `Active` après tests (mode Evaluate réservé à certaines offres Enterprise).
+- Target branches : `main`.
+- Restrict deletions et block force pushes.
+- Require pull request before merging, dismiss stale approvals lorsque des relecteurs existent.
+- Require status checks : sélectionner les noms **exacts** depuis les checks d'une PR réussie.
+- Ne pas exiger deux approbations si seul un compte humain dispose des droits nécessaires : cela bloquerait toute fusion.
+- Vérifier sur une PR de test que les contrôles s'appliquent ; ne pas rendre la règle Active sans voie de déblocage.
+
+## D. Security
+
+https://github.com/Lab-Raven/epiverse-github-lab/settings/security_analysis
+
+**Déjà activés sur les derniers écrans** : Dependabot alerts, malware alerts, security updates, grouped updates, CodeQL default setup, Copilot Autofix, Push Protection ; dans Security Overview : Private vulnerability reporting, code scanning et secret scanning alerts Enabled.
+
+À vérifier désormais : findings réelles, sévérité, permissions, alertes à traiter, et état de `Code quality findings` (encore désactivé). **Ne pas activer des options facturables sans vérifier les conditions.**
+
+## E. Discussions et Wiki
+
+- Discussions : https://github.com/Lab-Raven/epiverse-github-lab/discussions — l'annonce d'accueil est **déjà publiée** et épinglée ; ne pas en créer de doublon.
+- Wiki : https://github.com/Lab-Raven/epiverse-github-lab/wiki — page **Home déjà créée**, remplacer le texte qui indique `dépôt privé` par `LAB public / données fictives`. Contenu corrigé : `wiki-content/Home.md`. Script `bash scripts/publish_wiki.sh --apply` pour synchroniser Home et Sidebar via le dépôt Git Wiki.
+
+## F. Tester Pages, Releases, Docker, GHCR et environnement
+
+- Pages : mettre `Settings → Pages → Source: GitHub Actions` ; déclencher le workflow manuel de démonstration après validation. Le site sera **PUBLIC**.
+- Releases : tester `LAB - Préparer une release brouillon`, jamais publier une version du produit EpiVerse.
+- Docker : tester `LAB - Tester Docker sans publication`, confirmation `LAB_BUILD`.
+- GHCR : ne pas publier automatiquement ; un package peut avoir une visibilité indépendante et des coûts de stockage.
+- Environments : `scripts/setup_environment.sh --apply` prépare `lab-simulation`, sans serveur, clé ni déploiement.
+- Teams : `scripts/setup_teams.sh --apply` peut créer des équipes **vides** ; aucune invitation aux membres réels.
+- Codespaces : `Code → Codespaces → Create a codespace` pour vérifier le devcontainer ; surveiller la consommation.
+
+## G. Vérifications et confidentialité historique
+
+Les anciens commits et une Issue publique ont mentionné des membres réels. **Les changements dans les fichiers courants n'effacent pas l'historique Git, les caches, forks ni copies externes.** Évaluer séparément la nécessité d'une réduction d'exposition, sans `push --force` sans validation expresse.
+
+Ne jamais coller de PAT, clé ou document interne dans ce dépôt ou dans une discussion publique. Pour des données réelles, préférer exclusivement le dépôt officiel privé et un Project privé à accès validé.
+
+### Ruleset sur GitHub Free
+
+Après fusion du correctif, `bash scripts/setup_ruleset.sh --apply` crée une règle **Disabled** visant `main`. Les cinq checks réels sont `validate`, `policy`, `scan`, `secret-guard` et `public-lab`. Activer dans Settings → Rules après test, sans imposer de relecteur inexistant. Voir `docs/operations/RULESET_MAIN.md`.

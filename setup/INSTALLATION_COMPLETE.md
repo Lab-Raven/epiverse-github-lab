@@ -1,46 +1,32 @@
-# Installation complète du laboratoire GitHub
+# Installation et test du LAB public
 
-**Cible unique :** `Lab-Raven/epiverse-github-lab` (doit être PRIVÉ ; état PUBLIC constaté le 5 novembre 2026). **Jamais** le dépôt officiel EpiVerse.
+**Cible unique :** `Lab-Raven/epiverse-github-lab`, PUBLIC intentionnellement. Project de pilotage existant n° 1 : **PRIVATE**. Dépôt de l'équipe `epiverse-epitech/epiverse` exclu.
 
-## Étapes automatiques déjà réalisées par le connecteur
-- Visibilité publique constatée après transfert — correction manuelle indispensable ; documentation, gouvernance et RACI provisoire.
-- Issue forms, templates de PR, CODEOWNERS, Dependabot, workflows Actions.
-- Issues factices 1 à 5 + incident réel du LAB #7 ; PR #6 en brouillon.
-- Labels de classification présents sur les tickets d'essai (couleur GitHub par défaut).
+## Prêt dans le dépôt
+Issues fictives, labels, templates, PR, CODEOWNERS, Dependabot, CodeQL natif activé, workflows CI/SAST/sécurité/rapports, documentation, page Wiki Home, annonce Discussions et scripts de test.
 
-## Étapes possibles avec un terminal connecté à GitHub
-Les commandes ci-dessous se font sur ton ordinateur, avec TON authentification. Aucun jeton à transmettre au chat.
-
+## Via GitHub CLI (macOS)
 ```bash
-# macOS (si GitHub CLI absent)
 brew install gh jq
 gh auth login
-gh auth status
 gh auth refresh -s project
-git clone git@github.com:Lab-Raven/epiverse-github-lab.git
+gh repo clone Lab-Raven/epiverse-github-lab
 cd epiverse-github-lab
-
-# Prévisualiser et exécuter le bootstrap des labels/jalons
-python3 scripts/bootstrap_lab.py --dry-run
-python3 scripts/bootstrap_lab.py --apply
-
-# Créer automatiquement le Project V2 privé, ses champs et rattacher les issues
-bash scripts/setup_projects.sh --dry-run
-bash scripts/setup_projects.sh --apply
-
-# Activation volontaire des fonctions du seul dépôt privé
-bash scripts/setup_repo_features.sh --dry-run
-bash scripts/setup_repo_features.sh --apply
+bash scripts/complete_lab.sh --dry-run
+bash scripts/complete_lab.sh --apply
 ```
 
-## Étapes UI indisponibles au connecteur actuel
-- **GitHub Projects dans Lab-Raven** : personnaliser les vues (Board, Sprint, Roadmap, Risques, Pédagogie) et les automations, car GitHub CLI ne gère pas toutes les vues/iterations.
-- **Settings → Actions → General** : diagnostiquer `startup_failure` avec aucun job, voir Issue #7.
-- **Settings → Billing & Licensing** : vérifier blocage de compte / consommation ; ne jamais rendre public pour contourner.
-- **Settings → Branches / Rules** : configurer les protections seulement si forfait private compatible ; ne pas exiger une seconde personne dans ce dépôt individuel.
-- **Settings → Security / Code security** : voir ce qui est inclus dans le forfait ; activer les contrôles gratuits ; ne pas accepter de facturation supplémentaire sans décision.
-- **Discussions** : activer, catégoriser et publier un sujet d'essai, si option proposée.
-- **Releases, Packages et Environments** : tests limités au LAB, pas de publication externe.
+Le script teste le dépôt cible et guide l'installation des labels et jalons, l'import des Issues fictives dans **le Project n° 1 existant**, la création d'équipes de simulation vides et d'un environnement factice. Il demande des confirmations. Ne pas coller de token dans un chat.
 
-## Validation
-Cocher `setup/CRITERES_ACCEPTATION.md` à partir d'exécutions et liens **réels**, jamais de captures fictives.
+## Fonctionnalités à configurer dans l'interface
+- GitHub Project : champs, itérations, vues Kanban, Portfolio, Sprint et Roadmap.
+- Issues Views : au moins une vue privée et une vue partagée sans information réelle.
+- Branch ruleset : `main`, d'abord Evaluate puis Active.
+- Wiki : remplacer le texte erroné `dépôt privé` dans Home et ajouter la Sidebar.
+- GitHub Pages : source GitHub Actions puis workflow manuel de vitrine fictive.
+- Releases : brouillon du LAB seulement ; packages GHCR facultatifs après contrôle de visibilité/coûts.
+- Security : vérifier les résultats CodeQL/Dependabot/Secret Scanning, non simplement les boutons.
+- Codespaces et Teams : contrôler les quotas et créer des équipes vides uniquement.
+
+## Risque historique
+Les premières versions publiques ont mentionné des noms réels. Les commits passés demeurent accessibles ; aucune réécriture destructive de l'historique n'est engagée ici. Voir `docs/security/PUBLIC_HISTORY_REVIEW.md`.

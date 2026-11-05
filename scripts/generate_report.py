@@ -11,6 +11,8 @@ LAB_REPO = "Lab-Raven/epiverse-github-lab"
 ROOT = Path(__file__).resolve().parents[1]
 
 def github_list(endpoint, token):
+    if endpoint not in {"issues", "pulls"}:
+        raise ValueError("Endpoint GitHub interdit")
     collected = []
     for page in range(1, 21):
         url = f"https://api.github.com/repos/{LAB_REPO}/{endpoint}?state=all&per_page=100&page={page}"
@@ -19,7 +21,7 @@ def github_list(endpoint, token):
             "Accept": "application/vnd.github+json",
             "User-Agent": "epiverse-governance-lab",
         })
-        with urllib.request.urlopen(req, timeout=25) as response:
+        with urllib.request.urlopen(req, timeout=25) as response:  # nosec B310 - URL HTTPS GitHub et endpoint en liste blanche
             chunk = json.load(response)
         if not isinstance(chunk, list):
             raise ValueError("Réponse GitHub inattendue")

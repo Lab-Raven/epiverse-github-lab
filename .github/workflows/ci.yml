@@ -21,6 +21,9 @@ jobs:
           python-version: '3.12'
       - name: Vérification documentaire
         run: python scripts/verify_lab.py
+      - name: Vérifier les scripts Bash
+        run: |
+          for file in scripts/*.sh; do bash -n "$file"; done
       - name: Tests unitaires
         run: python -m unittest discover -s tests -v
       - name: Rapport démonstratif explicitement fictif

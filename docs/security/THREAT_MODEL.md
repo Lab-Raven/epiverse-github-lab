@@ -1,14 +1,15 @@
-# Modèle de menaces simplifié — GitHub LAB
+# Modèle de menaces — laboratoire GitHub PUBLIC
 
-| Scénario | Impact | Contrôle | Vérification |
-|---|---|---|---|
-| Fuite d'un dépôt privé | divulgation de décisions internes | accès minimaux, rien de sensible | Settings + audit accès |
-| Push de secret | exposition de jetons | .gitignore, secret scanning si disponible | test avec marqueur factice, **jamais secret réel** |
-| PR malveillante d'un agent | exécution non désirée | permissions workflows read-only, revue humaine | vérifier workflow diff |
-| Publication Pages/GHCR | exposition du laboratoire | pas de Pages / déploiement ; releases draft | Settings |
-| Miroir accidentel | modification équipe | aucune référence de push au dépôt officiel | inspection des scripts |
-| Faux indicateurs | évaluation trompeuse | bannière LAB fictif, provenance metrics | rapports |
-| Social engineering d'un collaborateur | élévation de privilège | comptes vérifiés, pas d'invitations automatiques | liste membres |
-| Supply chain Actions | actions compromis | pin SHA envisagé, Dependabot et permissions | revue workflows |
+| Scénario | Impact | Mesure de réduction |
+|---|---|---|
+| Exposition d'informations dans commits antérieurs | Atteinte à la confidentialité des tiers | Revue historique distincte et précautions sur contenus futurs |
+| Fuite de secret dans PR/Issue/Action | Compromission de compte/service | Push Protection, Secret Scanning, révocation immédiate, revue du diff |
+| Informations sensibles dans Project PRIVATE via Issue PUBLIC | Exposition du ticket source | Exemples fictifs uniquement et Project séparé pour données réelles |
+| Injection dans PR d'agent IA | Modification ou publication malveillante | Revue humaine, permissions minimales, aucun `pull_request_target` dangereux |
+| Publication GHCR/Pages non voulue | Diffusion publique et coûts | Workflows manuels, garde-fous et vérification de contenu |
+| Force-push ou suppression de main | Perte ou altération de preuve | Ruleset de branche après test en Evaluate |
+| Miroir vers le dépôt officiel | Modification du véritable EpiVerse | Cible fixée au LAB, aucun miroir automatique |
+| Métriques fictives annoncées comme réelles | Information trompeuse au jury | Étiquetage explicite, preuves vérifiables, provenance des KPI |
+| Dépendance GitHub Actions compromise | Code tiers malveillant | Dependabot, revue des PR, permissions minimales et version pinning |
 
-Ce document est un exercice de planification, pas un rapport d'audit de l'organisation réelle.
+Ce document est un exercice de modélisation, pas un audit du véritable projet.
