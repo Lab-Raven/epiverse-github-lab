@@ -1,0 +1,41 @@
+name: LAB - Audit GitHub et configuration
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+jobs:
+  github-state:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Capturer l'état réel GitHub (LAB seulement)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$REPO" = "Lab-Raven/epiverse-github-lab"
+          {
+            echo "# Audit technique GitHub LAB"
+            echo
+            echo "Dépôt : $REPO"
+            echo "Horodatage : $(date -u +'%Y-%m-%d %H:%M UTC')"
+            echo
+            echo "| Caractéristique | Valeur GitHub réelle |"
+            echo "|---|---|"
+            for pair in "private:Privé" "has_issues:Issues" "has_projects:Projects" "has_wiki:Wiki" "has_discussions:Discussions"; do
+              key="${pair%%:*}"
+              label="${pair#*:}"
+              value="$(gh api "repos/$REPO" --jq ".$key")"
+              echo "| $label | $value |"
+            done
+            open_issues="$(gh api "search/issues?q=repo:$REPO+type:issue+state:open" --jq '.total_count')"
+            open_prs="$(gh api "search/issues?q=repo:$REPO+type:pr+state:open" --jq '.total_count')"
+            echo "| Issues ouvertes | $open_issues |"
+            echo "| Pull Requests ouvertes | $open_prs |"
+            echo
+            echo "Ces chiffres décrivent l'activité du LAB, pas la réalisation du logiciel EpiVerse."
+          } >> "$GITHUB_STEP_SUMMARY"

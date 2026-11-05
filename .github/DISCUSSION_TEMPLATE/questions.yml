@@ -1,0 +1,18 @@
+body:
+  - type: markdown
+    attributes:
+      value: "EpiVerse LAB non officiel. Question de configuration GitHub uniquement. Ne pas partager d'identifiant ou de secret."
+  - type: textarea
+    id: question
+    attributes:
+      label: Question et résultat attendu
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexte technique et démarches déjà tentées
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Logs et preuves expurgés

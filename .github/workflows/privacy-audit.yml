@@ -1,0 +1,29 @@
+name: LAB - Privacy gate
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  private-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Vérifier la visibilité privée du laboratoire
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          test "$REPO" = "Lab-Raven/epiverse-github-lab"
+          if [ "$(gh api "repos/$REPO" --jq '.private')" != "true" ]; then
+            echo "::error::Le laboratoire EpiVerse est PUBLIC. Settings > General > Danger Zone > Make private"
+            echo "## FAIL — dépôt PUBLIC" >> "$GITHUB_STEP_SUMMARY"
+            echo "Le laboratoire ne doit pas héberger de données internes tant qu'il est public." >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+          echo "## PASS — dépôt privé" >> "$GITHUB_STEP_SUMMARY"
+          echo "La visibilité privée est vérifiée ; contrôler aussi celle du Project d'organisation." >> "$GITHUB_STEP_SUMMARY"
