@@ -1,3 +1,5 @@
+> **Project d'organisation déjà créé :** https://github.com/orgs/Lab-Raven/projects/1. Réutiliser #1 (renommer en EpiVerse — LAB privé), ne pas en créer un second. Rendre PRIVATE avant d'y importer des données.
+
 # Vues Projects — configuration de démonstration
 
 Après création du Project d'organisation **PRIVATE**, constituer les vues suivantes :
