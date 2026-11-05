@@ -1,9 +1,9 @@
 # Installation complète du laboratoire GitHub
 
-**Cible unique :** `estellegiroud/epiverse-github-lab` (PRIVÉ). **Jamais** le dépôt officiel EpiVerse.
+**Cible unique :** `Lab-Raven/epiverse-github-lab` (doit être PRIVÉ ; état PUBLIC constaté le 5 novembre 2026). **Jamais** le dépôt officiel EpiVerse.
 
 ## Étapes automatiques déjà réalisées par le connecteur
-- Dépôt contrôlé privé ; documentation, gouvernance et RACI provisoire.
+- Visibilité publique constatée après transfert — correction manuelle indispensable ; documentation, gouvernance et RACI provisoire.
 - Issue forms, templates de PR, CODEOWNERS, Dependabot, workflows Actions.
 - Issues factices 1 à 5 + incident réel du LAB #7 ; PR #6 en brouillon.
 - Labels de classification présents sur les tickets d'essai (couleur GitHub par défaut).
@@ -17,7 +17,7 @@ brew install gh jq
 gh auth login
 gh auth status
 gh auth refresh -s project
-git clone git@github.com:estellegiroud/epiverse-github-lab.git
+git clone git@github.com:Lab-Raven/epiverse-github-lab.git
 cd epiverse-github-lab
 
 # Prévisualiser et exécuter le bootstrap des labels/jalons
@@ -34,7 +34,7 @@ bash scripts/setup_repo_features.sh --apply
 ```
 
 ## Étapes UI indisponibles au connecteur actuel
-- **GitHub Projects** : personnaliser les vues (Board, Sprint, Roadmap, Risques, Pédagogie) et les automations, car GitHub CLI ne gère pas toutes les vues/iterations.
+- **GitHub Projects dans Lab-Raven** : personnaliser les vues (Board, Sprint, Roadmap, Risques, Pédagogie) et les automations, car GitHub CLI ne gère pas toutes les vues/iterations.
 - **Settings → Actions → General** : diagnostiquer `startup_failure` avec aucun job, voir Issue #7.
 - **Settings → Billing & Licensing** : vérifier blocage de compte / consommation ; ne jamais rendre public pour contourner.
 - **Settings → Branches / Rules** : configurer les protections seulement si forfait private compatible ; ne pas exiger une seconde personne dans ce dépôt individuel.
