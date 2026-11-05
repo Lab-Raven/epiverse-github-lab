@@ -26,7 +26,7 @@ jobs:
       - name: Rapport démonstratif explicitement fictif
         run: python scripts/generate_report.py --demo --output reporting/demo-status.md
       - name: Artefact de test privé
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: epiverse-lab-demo
           path: reporting/demo-status.md

@@ -23,7 +23,7 @@ jobs:
         run: |
           python scripts/generate_report.py --github --repo "$GITHUB_REPOSITORY" --output reporting/lab-current.md
           cat reporting/lab-current.md >> "$GITHUB_STEP_SUMMARY"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: lab-weekly-report
           path: reporting/lab-current.md
