@@ -1,0 +1,10 @@
+name: LAB - Test minimal Actions
+on: [push, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simple verification
+        run: echo 'GitHub Actions LAB OK'
