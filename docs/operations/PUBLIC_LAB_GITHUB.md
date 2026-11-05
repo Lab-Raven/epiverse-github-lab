@@ -20,7 +20,7 @@ Protection de branche / rulesets, Wiki, Pages, GitHub Actions avec limites de co
 
 ## Protections recommandées pour main
 
-- Ruleset ciblant `main`, d'abord Evaluate puis Active.
+- Ruleset ciblant `main`, d'abord Disabled puis Active.
 - Empêcher suppression et force push.
 - Exiger les Pull Requests et les checks réellement existants.
 - Ne pas exiger de relecteur supplémentaire non disponible dans le LAB mono-utilisateur.

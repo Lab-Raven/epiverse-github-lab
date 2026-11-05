@@ -47,7 +47,7 @@ https://github.com/Lab-Raven/epiverse-github-lab/settings/rules
 
 Créer un **Branch ruleset** pour la branche `main`, après l'intégration du kit :
 - Ruleset name : `LAB — main protected`
-- Enforcement : `Evaluate` pour commencer, puis `Active` après tests.
+- Enforcement : `Disabled` pour commencer, puis `Active` après tests (mode Evaluate réservé à certaines offres Enterprise).
 - Target branches : `main`.
 - Restrict deletions et block force pushes.
 - Require pull request before merging, dismiss stale approvals lorsque des relecteurs existent.
@@ -83,3 +83,7 @@ https://github.com/Lab-Raven/epiverse-github-lab/settings/security_analysis
 Les anciens commits et une Issue publique ont mentionné des membres réels. **Les changements dans les fichiers courants n'effacent pas l'historique Git, les caches, forks ni copies externes.** Évaluer séparément la nécessité d'une réduction d'exposition, sans `push --force` sans validation expresse.
 
 Ne jamais coller de PAT, clé ou document interne dans ce dépôt ou dans une discussion publique. Pour des données réelles, préférer exclusivement le dépôt officiel privé et un Project privé à accès validé.
+
+### Ruleset sur GitHub Free
+
+Après fusion du correctif, `bash scripts/setup_ruleset.sh --apply` crée une règle **Disabled** visant `main`. Les cinq checks réels sont `validate`, `policy`, `scan`, `secret-guard` et `public-lab`. Activer dans Settings → Rules après test, sans imposer de relecteur inexistant. Voir `docs/operations/RULESET_MAIN.md`.

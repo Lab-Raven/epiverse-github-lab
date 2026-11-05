@@ -22,6 +22,7 @@ if [[ "$MODE" == "--dry-run" ]]; then
   bash scripts/setup_teams.sh --dry-run
   bash scripts/setup_environment.sh --dry-run
   bash scripts/publish_wiki.sh --dry-run
+  bash scripts/setup_ruleset.sh --dry-run
   echo "DRY-RUN terminé : aucune modification GitHub."
   exit 0
 fi
@@ -51,6 +52,7 @@ bash scripts/setup_repo_features.sh --apply
 bash scripts/setup_projects.sh --apply
 bash scripts/setup_teams.sh --apply
 bash scripts/setup_environment.sh --apply
+bash scripts/setup_ruleset.sh --apply
 
 echo "=== Préparation terminée ==="
 echo "Configurer manuellement les 10 vues Projects et les protections de branches dans GitHub."

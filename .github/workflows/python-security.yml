@@ -2,16 +2,8 @@ name: LAB - Analyse statique Python
 on:
   push:
     branches: [main]
-    paths:
-      - 'scripts/**'
-      - 'tests/**'
-      - '.github/workflows/python-security.yml'
   pull_request:
     branches: [main]
-    paths:
-      - 'scripts/**'
-      - 'tests/**'
-      - '.github/workflows/python-security.yml'
   workflow_dispatch:
 permissions:
   contents: read
