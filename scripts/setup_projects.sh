@@ -32,7 +32,7 @@ CURRENT_TITLE="$(gh project view "$NUMBER" --owner "$OWNER" --format json --jq '
   exit 6
 }
 case "$CURRENT_TITLE" in
-  "$TITLE"|*"untitled project"*)
+  "$TITLE"|"EpiVerse — LAB privé"|*"untitled project"*)
     echo "Project #1 reconnu : $CURRENT_TITLE"
     ;;
   *)
