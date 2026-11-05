@@ -16,7 +16,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "$REPO" = "estellegiroud/epiverse-github-lab"
+          test "$REPO" = "Lab-Raven/epiverse-github-lab"
           test "$(gh api "repos/$REPO" --jq '.private')" = "true"
           while IFS='|' read -r name color; do
             test -n "$name" || continue
