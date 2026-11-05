@@ -5,7 +5,7 @@ import re
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
-BAD_FILE = re.compile(r"(^|/)(\.env(\..*)?|id_rsa|id_ed25519|.*\.(pem|p12|pfx|key))$")
+BAD_FILE = re.compile(r"(^|/)(\.env(?:\.(?!example(?:$|/))[^/]*)?|id_rsa|id_ed25519|.*\.(pem|p12|pfx|key))$")
 PATTERNS = [
     re.compile(r"ghp_[A-Za-z0-9]{36}"),
     re.compile(r"github_pat_[A-Za-z0-9_]{40,}"),
