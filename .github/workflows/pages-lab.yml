@@ -1,0 +1,32 @@
+name: LAB - Démo GitHub Pages (déploiement manuel)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: lab-pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.repository == 'Lab-Raven/epiverse-github-lab' && github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bloquer toute donnée interne et contrôler le site
+        run: |
+          set -euo pipefail
+          python3 scripts/public_lab_guard.py
+          grep -Fq 'Données fictives uniquement' docs/site/index.html
+          grep -Fq 'Non officiel' docs/site/index.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs/site
+      - id: deployment
+        uses: actions/deploy-pages@v4
