@@ -9,7 +9,7 @@ permissions:
   pull-requests: read
 jobs:
   week:
-    if: github.repository == 'estellegiroud/epiverse-github-lab'
+    if: github.repository == 'Lab-Raven/epiverse-github-lab'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
