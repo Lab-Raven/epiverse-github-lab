@@ -15,12 +15,13 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - name: Refuser si le dépôt est public
+      - name: Vérifier le dépôt LAB (aucune publication)
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          test "$(gh api "repos/$GITHUB_REPOSITORY" --jq '.private')" = "true"
+          test "$GITHUB_REPOSITORY" = "Lab-Raven/epiverse-github-lab"
+          echo "Image locale seulement : pas de push GHCR."
       - name: Construire et exécuter localement
         run: |
           docker build -f docker/lab.Dockerfile -t epiverse-lab:local .

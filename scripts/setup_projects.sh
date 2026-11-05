@@ -9,9 +9,9 @@ if [ "$MODE" != "--apply" ] && [ "$MODE" != "--dry-run" ]; then
   echo "Usage: bash scripts/setup_projects.sh --dry-run|--apply" >&2
   exit 2
 fi
-echo "CIBLE UNIQUE : $REPO ; Project privé : $TITLE"
+echo "CIBLE UNIQUE : $REPO (public autorisé) ; Project privé : $TITLE"
 if [ "$MODE" = "--dry-run" ]; then
-  echo "DRY-RUN : vérifier authentification, créer/mettre à jour Project privé."
+  echo "DRY-RUN : réutiliser exclusivement le Project #1 et le maintenir privé."
   echo "DRY-RUN : lier au dépôt LAB ; champs Type/Priority/Workstream/Validation/Estimate/Actual/ETC/Requirement/WBS/Evidence."
   echo "DRY-RUN : ajouter les Issues LAB et PR de test ; ne pas modifier les dépôts d'équipe."
   exit 0
@@ -19,7 +19,8 @@ fi
 command -v gh >/dev/null || { echo "GitHub CLI (gh) absent" >&2; exit 3; }
 command -v jq >/dev/null || { echo "jq absent" >&2; exit 3; }
 [ "$(gh api user --jq '.login')" = "estellegiroud" ] || { echo "Mauvais compte connecté" >&2; exit 4; }
-[ "$(gh api "repos/$REPO" --jq '.private')" = "true" ] || { echo "Dépôt non privé : abandon" >&2; exit 4; }
+gh api "repos/$REPO" --jq '.full_name' | grep -Fxq "$REPO" || { echo "Dépôt inattendu" >&2; exit 4; }
+echo "Repository LAB public intentionnel ; le Project #1 sera maintenu PRIVATE."
 echo "GitHub CLI doit disposer du scope 'project' (gh auth refresh -s project)."
 printf "Taper INSTALLER LAB pour confirmer : "
 read -r ANSWER

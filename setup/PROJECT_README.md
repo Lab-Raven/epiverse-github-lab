@@ -27,11 +27,12 @@ Portfolio, Backlog, Kanban, Sprint, Roadmap, Par domaine, Par personne, Risques 
 ## Principes
 
 1. Toutes les données de démonstration sont explicitement signalées `[LAB]`.
-2. Le Project et le dépôt associé doivent être **PRIVATE**.
+2. Le **Project #1 reste PRIVATE** ; le dépôt de démonstration est **PUBLIC** et ses Issues/PR sont publiques.
 3. Les responsables réels, charges et délais ne sont pas inventés.
 4. Aucun secret ni donnée personnelle sensible ne doit être enregistré.
 5. Le dépôt officiel `epiverse-epitech/epiverse` reste complètement hors périmètre.
 6. Toute configuration doit être vérifiée dans GitHub avant d'être déclarée opérationnelle.
+7. Ne jamais inscrire d'information confidentielle dans une Issue publique, même liée à ce Project privé.
 
 ## Accès
 

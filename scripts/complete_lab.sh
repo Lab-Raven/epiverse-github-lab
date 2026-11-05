@@ -32,14 +32,16 @@ command -v jq >/dev/null || { echo "Installer jq" >&2; exit 3; }
   echo "Le compte connecté n'est pas le compte attendu. Arrêt." >&2
   exit 4
 }
-[[ "$(gh api "repos/$REPO" --jq '.private')" == "true" ]] || {
-  echo "Le dépôt du LAB est PUBLIC. Le rendre PRIVATE dans Settings avant de poursuivre." >&2
+[[ "$(gh api "repos/$REPO" --jq '.full_name')" == "$REPO" ]] || {
+  echo "Dépôt inattendu : arrêt." >&2
   exit 5
 }
+echo "Le dépôt de test peut être PUBLIC. Toutes les Issues importées resteront PUBLIQUES."
 
 echo "La création Projects v2 exige le scope 'project' (gh auth refresh -s project)."
 echo "Cette procédure peut créer/mettre à jour labels, jalons, Project privé, Teams vides et environnement factice."
-echo "Elle ne déploie aucun code produit, n'invite personne, n'active aucun abonnement."
+echo "Elle ne déploie aucun code produit, n'invite personne, n'active aucun abonnement.
+Le Project n° 1 doit rester PRIVATE et ne doit contenir aucune information liée aux personnes réelles."
 printf 'Taper CONFIGURER LAB pour poursuivre : '
 read -r answer
 [[ "$answer" == "CONFIGURER LAB" ]] || exit 6

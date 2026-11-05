@@ -7,7 +7,7 @@ MODE="${1:---dry-run}"
 echo "LAB : création potentielle de l'environnement lab-simulation, sans déploiement."
 [[ "$MODE" == "--apply" ]] || exit 0
 command -v gh >/dev/null
-[[ "$(gh api "repos/$REPO" --jq '.private')" == "true" ]] || { echo "Dépôt public: arrêt"; exit 3; }
+[[ "$(gh api "repos/$REPO" --jq '.full_name')" == "$REPO" ]] || { echo "Dépôt inattendu"; exit 3; }
 [[ "$(gh api user --jq '.login')" == "estellegiroud" ]] || exit 4
 printf 'Taper ENV LAB : '
 read -r answer

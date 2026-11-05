@@ -18,10 +18,8 @@ jobs:
         run: |
           set -euo pipefail
           test "$REPO" = "Lab-Raven/epiverse-github-lab"
-          test "$(gh api "repos/$REPO" --jq '.private')" = "true" || {
-            echo "::error::Rendre le dépôt PRIVATE avant l'initialisation."
-            exit 1
-          }
+          test "$(gh api "repos/$REPO" --jq '.full_name')" = "$REPO"
+          echo "LAB public de démonstration : seules des étiquettes et jalons fictifs sont créés."
           while IFS='|' read -r name color; do
             test -n "$name" || continue
             gh label create "$name" --repo "$REPO" --color "$color" --force

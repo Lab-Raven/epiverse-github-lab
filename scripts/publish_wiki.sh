@@ -10,12 +10,13 @@ fi
 echo "Wiki cible : https://github.com/$REPO/wiki"
 if [[ "$MODE" == "--dry-run" ]]; then
   echo "DRY RUN : copie des pages wiki-content/Home.md et wiki-content/_Sidebar.md"
-  echo "Prérequis : dépôt PRIVATE ; Wiki initialisé par sa première page dans GitHub."
+  echo "Prérequis : pages 100 % fictives, Wiki PUBLIC initialisé avec sa première page."
   exit 0
 fi
 command -v gh >/dev/null || exit 3
 command -v git >/dev/null || exit 3
-[[ "$(gh api "repos/$REPO" --jq '.private')" == "true" ]] || { echo "Dépôt PUBLIC : refus"; exit 4; }
+[[ "$(gh api "repos/$REPO" --jq '.full_name')" == "$REPO" ]] || { echo "Dépôt inattendu"; exit 4; }
+echo "AVERTISSEMENT : le Wiki est PUBLIC ; aucun contenu interne."
 [[ "$(gh api user --jq '.login')" == "estellegiroud" ]] || { echo "Compte GitHub différent : refus"; exit 5; }
 printf 'Taper PUBLIER WIKI LAB : '
 read -r answer
@@ -30,6 +31,6 @@ git -C "$tmp/wiki" add Home.md _Sidebar.md
 if git -C "$tmp/wiki" diff --cached --quiet; then
   echo "Wiki déjà à jour."
 else
-  git -C "$tmp/wiki" commit -m "docs(lab): initialiser le Wiki privé"
+  git -C "$tmp/wiki" commit -m "docs(lab): synchroniser le Wiki de démonstration"
   git -C "$tmp/wiki" push origin HEAD
 fi

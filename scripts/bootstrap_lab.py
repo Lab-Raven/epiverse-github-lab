@@ -43,8 +43,9 @@ def main():
     a = p.parse_args()
     if a.apply:
         state = run(["gh", "repo", "view", REPO, "--json", "isPrivate", "--jq", ".isPrivate"], True)
-        if state.lower() != "true":
-            p.error("ABANDON : le dépôt cible n'est pas privé.")
+        if state.lower() not in {"true", "false"}:
+            p.error("ABANDON : visibilité GitHub inattendue.")
+        print("Vérification : dépôt LAB exact, visibilité publique autorisée ; aucune donnée sensible.")
         if input("Taper APPLIQUER AU LAB : ") != "APPLIQUER AU LAB":
             p.error("Confirmation refusée.")
     for name, color in LABELS.items():

@@ -12,7 +12,7 @@ echo "Organisation cible : $ORG ; équipes sans membre et sans droits sur le dé
 for t in "${TEAMS[@]}"; do echo "TEAM $t"; done
 [[ "$MODE" == "--apply" ]] || exit 0
 command -v gh >/dev/null || { echo "Installer gh" >&2; exit 3; }
-[[ "$(gh api "repos/$REPO" --jq '.private')" == "true" ]] || { echo "Dépôt public: arrêt" >&2; exit 4; }
+[[ "$(gh api "repos/$REPO" --jq '.full_name')" == "$REPO" ]] || { echo "Dépôt inattendu" >&2; exit 4; }
 [[ "$(gh api user --jq '.login')" == "estellegiroud" ]] || { echo "Compte non autorisé pour cet exemple" >&2; exit 5; }
 printf 'Taper CREER EQUIPES LAB : '
 read -r answer
