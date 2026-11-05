@@ -1,6 +1,6 @@
 # Politique d'accès — laboratoire
 
-- Propriétaire : `estellegiroud` ; dépôt `estellegiroud/epiverse-github-lab`, **PRIVATE**.
+- Propriétaire : `estellegiroud` ; dépôt `Lab-Raven/epiverse-github-lab`, **PRIVATE**.
 - **Cible interdite** de toute automatisation de ce LAB : `epiverse-epitech/epiverse`.
 - Aucune invitation des autres membres, aucun mapping nominatif des comptes tant que les identités et rôles ne sont pas validés.
 - Ne pas stocker de clé, token, identifiant produit, dossier secret, donnée personnelle ni contenu propriétaire de l'équipe.
