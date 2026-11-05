@@ -1,0 +1,28 @@
+name: LAB - Tester Docker sans publication
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: "Entrer LAB_BUILD pour construire l'image de test sans la publier"
+        required: true
+        default: "NO"
+permissions:
+  contents: read
+jobs:
+  docker-demo:
+    if: github.repository == 'Lab-Raven/epiverse-github-lab' && inputs.confirmation == 'LAB_BUILD'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Refuser si le dépôt est public
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "$(gh api "repos/$GITHUB_REPOSITORY" --jq '.private')" = "true"
+      - name: Construire et exécuter localement
+        run: |
+          docker build -f docker/lab.Dockerfile -t epiverse-lab:local .
+          docker run --rm epiverse-lab:local
+          echo "Docker démontré sans publication GHCR et sans production." >> "$GITHUB_STEP_SUMMARY"
