@@ -1,0 +1,22 @@
+name: LAB - Sécurité documentaire
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  secret-guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Contrôler les signatures de secrets
+        run: python scripts/security_guard.py
+      - name: Vérifier les tests de contrôle
+        run: python -m unittest discover -s tests -v

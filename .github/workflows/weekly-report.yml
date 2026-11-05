@@ -1,0 +1,30 @@
+name: LAB - Rapport hebdomadaire (dépôt de test)
+on:
+  schedule:
+    - cron: "12 8 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+jobs:
+  week:
+    if: github.repository == 'estellegiroud/epiverse-github-lab'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Rapport uniquement à partir des données LAB
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python scripts/generate_report.py --github --repo "$GITHUB_REPOSITORY" --output reporting/lab-current.md
+          cat reporting/lab-current.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lab-weekly-report
+          path: reporting/lab-current.md
+          retention-days: 14
