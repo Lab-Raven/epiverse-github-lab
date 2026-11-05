@@ -11,7 +11,7 @@ from verify_lab import check
 
 class LabTests(unittest.TestCase):
     def test_repo_pinned_to_personal_lab(self):
-        self.assertEqual(LAB_REPO, "estellegiroud/epiverse-github-lab")
+        self.assertEqual(LAB_REPO, "Lab-Raven/epiverse-github-lab")
 
     def test_no_missing_files_or_secrets(self):
         missing, leaked, warnings = check()

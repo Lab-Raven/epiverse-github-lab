@@ -6,7 +6,7 @@ import sys
 
 def validate(body: str, base: str, repo: str):
     errors = []
-    if repo != "estellegiroud/epiverse-github-lab":
+    if repo != "Lab-Raven/epiverse-github-lab":
         errors.append("Workflow interdit hors du LAB")
     if base != "main":
         errors.append("Branche cible inattendue")
@@ -22,7 +22,7 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--body", default=os.getenv("PR_BODY", ""))
     p.add_argument("--base", default=os.getenv("PR_BASE", "main"))
-    p.add_argument("--repo", default=os.getenv("GITHUB_REPOSITORY", "estellegiroud/epiverse-github-lab"))
+    p.add_argument("--repo", default=os.getenv("GITHUB_REPOSITORY", "Lab-Raven/epiverse-github-lab"))
     a = p.parse_args()
     problems = validate(a.body, a.base, a.repo)
     for problem in problems:

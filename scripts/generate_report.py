@@ -7,7 +7,7 @@ import os
 from pathlib import Path
 import urllib.request
 
-LAB_REPO = "estellegiroud/epiverse-github-lab"
+LAB_REPO = "Lab-Raven/epiverse-github-lab"
 ROOT = Path(__file__).resolve().parents[1]
 
 def github_list(endpoint, token):
