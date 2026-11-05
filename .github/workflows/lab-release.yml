@@ -13,7 +13,7 @@ jobs:
     if: github.repository == 'Lab-Raven/epiverse-github-lab'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Préparer une draft prerelease (pas de publication)
         env:
           TAG: ${{ inputs.tag }}
