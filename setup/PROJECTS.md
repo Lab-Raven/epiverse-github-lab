@@ -1,6 +1,6 @@
 # GitHub Projects v2 — spécification du tableau privé
 
-Projet de test : `EpiVerse — LAB privé (non officiel)`, propriétaire `estellegiroud`, visibilité **PRIVATE**.
+Projet de test existant : https://github.com/orgs/Lab-Raven/projects/1, cible `EpiVerse — LAB privé (non officiel)`, propriétaire `Lab-Raven`, visibilité **PRIVATE**.
 
 ## Champs proposés
 | Champ | Type | Valeurs / consignes |
@@ -35,7 +35,7 @@ Nouvelle Issue → Backlog. PR liée → Review (contrôler manuellement). Issue
 
 ## Interface (non accessible au connecteur GitHub actuel)
 1. https://github.com/orgs/Lab-Raven/projects → **New project** → table → **Private**.
-2. Configurer les champs et vues, dans la limite des capacités du plan.
+2. Ne pas recréer de projet. Configurer les champs et vues de **#1**, dans la limite des capacités du plan.
 3. Ajouter les Issues LAB du dépôt, sans importer les tickets de l'organisation.
 4. Tester vue lecture seule et export des preuves.
 5. Confirmer indépendamment la confidentialité du Project.
