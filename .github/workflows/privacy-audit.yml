@@ -1,4 +1,4 @@
-name: LAB - Privacy gate
+name: LAB - Contrôle de publication
 on:
   push:
     branches: [main]
@@ -8,22 +8,21 @@ on:
 permissions:
   contents: read
 jobs:
-  private-only:
+  public-lab:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
-      - name: Vérifier la visibilité privée du laboratoire
+      - uses: actions/checkout@v4
+      - name: Contrôler le dépôt ciblé et afficher sa visibilité
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
           test "$REPO" = "Lab-Raven/epiverse-github-lab"
-          if [ "$(gh api "repos/$REPO" --jq '.private')" != "true" ]; then
-            echo "::error::Le laboratoire EpiVerse est PUBLIC. Settings > General > Danger Zone > Make private"
-            echo "## FAIL — dépôt PUBLIC" >> "$GITHUB_STEP_SUMMARY"
-            echo "Le laboratoire ne doit pas héberger de données internes tant qu'il est public." >> "$GITHUB_STEP_SUMMARY"
-            exit 1
-          fi
-          echo "## PASS — dépôt privé" >> "$GITHUB_STEP_SUMMARY"
-          echo "La visibilité privée est vérifiée ; contrôler aussi celle du Project d'organisation." >> "$GITHUB_STEP_SUMMARY"
+          visibility="$(gh api "repos/$REPO" --jq '.visibility')"
+          case "$visibility" in public|private) ;; *) echo "::error::Visibilité inattendue"; exit 1;; esac
+          echo "## LAB GitHub — visibilité : $visibility" >> "$GITHUB_STEP_SUMMARY"
+          echo "Données fictives uniquement, contrôle heuristique et revue humaine obligatoires." >> "$GITHUB_STEP_SUMMARY"
+      - name: Rechercher des signatures de données sensibles et classifier les documents
+        run: python3 scripts/public_lab_guard.py
