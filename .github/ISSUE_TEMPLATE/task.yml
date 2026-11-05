@@ -1,0 +1,26 @@
+name: "[LAB] Tâche"
+description: "Travail ponctuel, documentation, intégration ou pilotage"
+title: "[LAB][TASK] "
+labels: ["type:task"]
+body:
+  - type: textarea
+    id: objective
+    attributes:
+      label: Résultat attendu
+    validations:
+      required: true
+  - type: textarea
+    id: actions
+    attributes:
+      label: Travaux et dépendances
+  - type: textarea
+    id: done
+    attributes:
+      label: Critères de fin et preuves
+    validations:
+      required: true
+  - type: input
+    id: effort
+    attributes:
+      label: Effort initial / ETC
+      placeholder: "3 h / 3 h"

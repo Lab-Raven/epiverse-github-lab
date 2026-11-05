@@ -1,0 +1,35 @@
+name: "[LAB] Fonctionnalité"
+description: "Fonctionnalité fictive traçable dans l'environnement de test"
+title: "[LAB][FEATURE] "
+labels: ["type:feature"]
+body:
+  - type: markdown
+    attributes:
+      value: "LAB PRIVÉ — aucune fonctionnalité de ce dépôt ne prouve une livraison du projet réel."
+  - type: textarea
+    id: need
+    attributes:
+      label: Besoin et valeur utilisateur
+      description: Pour qui, pourquoi ?
+    validations:
+      required: true
+  - type: input
+    id: ref
+    attributes:
+      label: Exigence / WBS
+      placeholder: "LAB-REQ-001 / LAB-WBS-1.1"
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critères d'acceptation vérifiables
+      placeholder: "Étant donné... lorsque... alors..."
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Tests, preuves et dépendances
+  - type: input
+    id: estimate
+    attributes:
+      label: Estimation (heures)

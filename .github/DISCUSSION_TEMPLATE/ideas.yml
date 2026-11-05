@@ -1,0 +1,18 @@
+body:
+  - type: markdown
+    attributes:
+      value: "LAB uniquement. Les idées ne valent pas validation produit : convertir en Issue ou ADR après décision."
+  - type: textarea
+    id: idea
+    attributes:
+      label: Proposition et valeur
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives, dépendances et risques
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Liens et preuves

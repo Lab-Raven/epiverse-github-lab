@@ -1,0 +1,27 @@
+name: "[LAB] Anomalie"
+description: "Décrire un bug reproductible"
+title: "[LAB][BUG] "
+labels: ["type:bug"]
+body:
+  - type: textarea
+    id: steps
+    attributes:
+      label: Étapes de reproduction
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Résultat attendu
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Résultat observé
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environnement et preuves (sans secret)

@@ -1,0 +1,38 @@
+name: "[LAB] Risque"
+description: "Proposer un risque à suivre dans le registre"
+title: "[LAB][RISK] "
+labels: ["type:risk"]
+body:
+  - type: textarea
+    id: scenario
+    attributes:
+      label: Événement, causes, conséquences
+    validations:
+      required: true
+  - type: dropdown
+    id: probability
+    attributes:
+      label: Probabilité estimée
+      options:
+        - À évaluer
+        - Faible
+        - Moyenne
+        - Élevée
+    validations:
+      required: true
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Impact estimé
+      options:
+        - À évaluer
+        - Faible
+        - Moyen
+        - Élevé
+        - Critique
+    validations:
+      required: true
+  - type: textarea
+    id: mitigation
+    attributes:
+      label: Mesure, indicateur d'alerte, responsable, date de revue

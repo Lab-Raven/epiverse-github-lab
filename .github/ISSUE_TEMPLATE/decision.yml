@@ -1,0 +1,25 @@
+name: "[LAB] Décision"
+description: "Arbitrage produit, architecture, sécurité ou gouvernance"
+title: "[LAB][DECISION] "
+labels: ["type:decision"]
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Problème et contraintes
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: Options et compromis
+    validations:
+      required: true
+  - type: textarea
+    id: decision
+    attributes:
+      label: Décision proposée (non approuvée par défaut)
+  - type: input
+    id: adr
+    attributes:
+      label: Lien ADR si décision approuvée
