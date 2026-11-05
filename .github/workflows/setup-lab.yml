@@ -6,10 +6,11 @@ permissions:
   issues: write
 jobs:
   setup:
+    if: github.repository == 'Lab-Raven/epiverse-github-lab'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Vérifier la cible privée et initialiser uniquement ce dépôt
+      - name: Vérifier l'isolation et synchroniser les labels/couleurs
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
@@ -17,34 +18,43 @@ jobs:
         run: |
           set -euo pipefail
           test "$REPO" = "Lab-Raven/epiverse-github-lab"
-          test "$(gh api "repos/$REPO" --jq '.private')" = "true"
+          test "$(gh api "repos/$REPO" --jq '.private')" = "true" || {
+            echo "::error::Rendre le dépôt PRIVATE avant l'initialisation."
+            exit 1
+          }
           while IFS='|' read -r name color; do
             test -n "$name" || continue
-            if gh api "repos/$REPO/labels?per_page=100" --jq '.[].name' | grep -Fxq "$name"; then
-              echo "Déjà présent : $name"
-            else
-              gh api --method POST "repos/$REPO/labels" -f "name=$name" -f "color=$color" >/dev/null
-              echo "Créé : $name"
-            fi
+            gh label create "$name" --repo "$REPO" --color "$color" --force
+            echo "Label synchronisé : $name"
           done <<'LABELS'
           type:feature|0969da
           type:task|8250df
           type:bug|d73a4a
           type:risk|e99695
           type:decision|bf8700
+          type:documentation|0075ca
           priority:P0|b60205
           priority:P1|d93f0b
           priority:P2|fbca04
           priority:P3|0e8a16
           status:backlog|cfd3d7
+          status:ready|c2e0c6
+          status:in-progress|0969da
+          status:review|8250df
+          status:testing|1d76db
           status:blocked|d73a4a
+          status:done|0e8a16
+          domain:product|6f42c1
           domain:frontend|1d76db
           domain:backend|1d76db
           domain:2.5d|0e8a16
           domain:data|1d76db
+          domain:ai|6f42c1
           domain:security|b60205
           domain:devops|1d76db
           domain:governance|5319e7
+          domain:qa|0e8a16
+          domain:ux|fbca04
           LABELS
           while IFS= read -r title; do
             test -n "$title" || continue
@@ -59,4 +69,5 @@ jobs:
           [LAB] Sprint 1 — qualité et PR
           [LAB] Recette pédagogique
           MILESTONES
-          echo "Initialisation du LAB réussie, dépôt officiel non modifié." >> "$GITHUB_STEP_SUMMARY"
+          echo "### Labels et jalons du LAB synchronisés" >> "$GITHUB_STEP_SUMMARY"
+          echo "Dépôt officiel inchangé." >> "$GITHUB_STEP_SUMMARY"
