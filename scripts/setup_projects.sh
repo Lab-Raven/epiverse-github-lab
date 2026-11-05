@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Crée le Project v2 privé et rattache uniquement les issues du LAB.
 set -euo pipefail
-OWNER="estellegiroud"
-REPO="estellegiroud/epiverse-github-lab"
+OWNER="Lab-Raven"
+REPO="Lab-Raven/epiverse-github-lab"
 TITLE="EpiVerse — LAB privé (non officiel)"
 MODE="$(printf '%s' "$1")"
 if [ "$MODE" != "--apply" ] && [ "$MODE" != "--dry-run" ]; then
@@ -18,7 +18,7 @@ if [ "$MODE" = "--dry-run" ]; then
 fi
 command -v gh >/dev/null || { echo "GitHub CLI (gh) absent" >&2; exit 3; }
 command -v jq >/dev/null || { echo "jq absent" >&2; exit 3; }
-[ "$(gh api user --jq '.login')" = "$OWNER" ] || { echo "Mauvais compte connecté" >&2; exit 4; }
+[ "$(gh api user --jq '.login')" = "estellegiroud" ] || { echo "Mauvais compte connecté" >&2; exit 4; }
 [ "$(gh api "repos/$REPO" --jq '.private')" = "true" ] || { echo "Dépôt non privé : abandon" >&2; exit 4; }
 echo "GitHub CLI doit disposer du scope 'project' (gh auth refresh -s project)."
 printf "Taper INSTALLER LAB pour confirmer : "
@@ -66,5 +66,5 @@ while IFS= read -r url; do
 done < <(gh issue list -R "$REPO" --state all --json url --limit 200 --jq '.[].url')
 # La PR n'est pas un livrable accepté, mais son suivi dans le Project est utile.
 gh project item-add "$NUMBER" --owner "$OWNER" --url "https://github.com/$REPO/pull/6" >/dev/null || true
-echo "Projet privé prêt : https://github.com/users/$OWNER/projects/$NUMBER"
+echo "Projet privé prêt : https://github.com/orgs/$OWNER/projects/$NUMBER"
 echo "TERMINER DANS L'UI : Status, Itérations, Board, Sprint, Roadmap, Risques, Pédagogie."
