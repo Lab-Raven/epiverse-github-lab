@@ -1,0 +1,55 @@
+name: LAB - GHCR privé (publication manuelle)
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: "Taper PUBLISH_PRIVATE_GHCR pour publier une image de test (stockage potentiellement facturable)"
+        required: true
+        default: "NO"
+permissions:
+  contents: read
+  packages: write
+jobs:
+  publish:
+    if: github.repository == 'Lab-Raven/epiverse-github-lab' && inputs.confirmation == 'PUBLISH_PRIVATE_GHCR'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Vérifier la cible PRIVATE avant toute publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          test "$REPO" = "Lab-Raven/epiverse-github-lab"
+          test "$(gh api "repos/$REPO" --jq '.private')" = "true"
+          pkg="$(gh api "orgs/Lab-Raven/packages/container/epiverse-github-lab-demo" --jq '.visibility' 2>/dev/null || true)"
+          if [ -n "$pkg" ] && [ "$pkg" != "private" ]; then
+            echo "::error::Package existant non privé: publication refusée."
+            exit 1
+          fi
+      - name: Authentifier GitHub Container Registry
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+      - name: Construire et publier une image factice (privée)
+        env:
+          IMAGE: ghcr.io/lab-raven/epiverse-github-lab-demo
+        run: |
+          set -euo pipefail
+          docker build -f docker/lab.Dockerfile -t "$IMAGE:lab-$GITHUB_RUN_NUMBER" .
+          docker push "$IMAGE:lab-$GITHUB_RUN_NUMBER"
+          echo "Image DEMO du LAB : $IMAGE:lab-$GITHUB_RUN_NUMBER" >> "$GITHUB_STEP_SUMMARY"
+      - name: Vérifier la visibilité du package après publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          visibility="$(gh api "orgs/Lab-Raven/packages/container/epiverse-github-lab-demo" --jq '.visibility')"
+          test "$visibility" = "private" || {
+            echo "::error::Package non privé : corriger immédiatement les permissions."
+            exit 1
+          }
+          echo "GHCR : visibilité PRIVATE vérifiée." >> "$GITHUB_STEP_SUMMARY"
