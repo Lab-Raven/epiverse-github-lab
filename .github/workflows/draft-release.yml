@@ -14,7 +14,7 @@ jobs:
           test "$GITHUB_REPOSITORY" = "Lab-Raven/epiverse-github-lab"
           git archive --format=zip --output=epiverse-lab-source.zip HEAD
           echo "Archive de simulation : aucune release, package public ou déploiement." >> "$GITHUB_STEP_SUMMARY"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: lab-source
           path: epiverse-lab-source.zip
