@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Active seulement des fonctionnalités sans facturation et sans changement de visibilité.
 set -euo pipefail
-REPO="estellegiroud/epiverse-github-lab"
+REPO="Lab-Raven/epiverse-github-lab"
 MODE="$(printf '%s' "$1")"
 if [ "$MODE" != "--apply" ] && [ "$MODE" != "--dry-run" ]; then
   echo "Usage: bash scripts/setup_repo_features.sh --dry-run|--apply" >&2; exit 2
