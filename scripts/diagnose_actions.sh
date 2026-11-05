@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Read-only, aucune modification de configuration ni de la facturation.
 set -euo pipefail
-REPO="estellegiroud/epiverse-github-lab"
+REPO="Lab-Raven/epiverse-github-lab"
 command -v gh >/dev/null || { echo "Installer GitHub CLI" >&2; exit 1; }
 [ "$(gh api user --jq '.login')" = "estellegiroud" ] || { echo "Mauvais utilisateur" >&2; exit 2; }
 [ "$(gh api "repos/$REPO" --jq '.private')" = "true" ] || exit 3

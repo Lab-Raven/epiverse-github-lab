@@ -5,7 +5,7 @@ import json
 import subprocess
 import sys
 
-REPO = "estellegiroud/epiverse-github-lab"
+REPO = "Lab-Raven/epiverse-github-lab"
 LABELS = {
     "type:feature": "0969da", "type:task": "8250df",
     "type:bug": "d73a4a", "type:risk": "e99695",

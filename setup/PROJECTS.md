@@ -34,7 +34,7 @@ Assignee est un champ natif des Issues : ne pas le recréer. Ne pas lier automat
 Nouvelle Issue → Backlog. PR liée → Review (contrôler manuellement). Issue fermée → Done **seulement** après preuve/validation ; sinon conserver une étape de recette explicite.
 
 ## Interface (non accessible au connecteur GitHub actuel)
-1. https://github.com/users/estellegiroud/projects → **New project** → table → **Private**.
+1. https://github.com/orgs/Lab-Raven/projects → **New project** → table → **Private**.
 2. Configurer les champs et vues, dans la limite des capacités du plan.
 3. Ajouter les Issues LAB du dépôt, sans importer les tickets de l'organisation.
 4. Tester vue lecture seule et export des preuves.

@@ -21,7 +21,7 @@ def check(root=ROOT):
     leaked = [x for x in FORBIDDEN if (root / x).exists()]
     readme = (root / "README.md").read_text(encoding="utf-8") if (root / "README.md").exists() else ""
     warnings = []
-    if "NON OFFICIEL" not in readme:
+    if "NON OFFICIEL" not in readme.upper():
         warnings.append("README: avertissement NON OFFICIEL absent")
     if "epiverse-epitech/epiverse" not in readme:
         warnings.append("README: dépôt officiel non mentionné")

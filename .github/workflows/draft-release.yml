@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Générer l'archive de test
         run: |
-          test "$GITHUB_REPOSITORY" = "estellegiroud/epiverse-github-lab"
+          test "$GITHUB_REPOSITORY" = "Lab-Raven/epiverse-github-lab"
           git archive --format=zip --output=epiverse-lab-source.zip HEAD
           echo "Archive de simulation : aucune release, package public ou déploiement." >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4

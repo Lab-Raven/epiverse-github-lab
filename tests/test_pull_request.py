@@ -7,13 +7,13 @@ from check_pull_request import validate
 
 class PullRequestTests(unittest.TestCase):
     def test_valid(self):
-        self.assertEqual(validate("[LAB] Non officiel. Closes #1", "main", "estellegiroud/epiverse-github-lab"), [])
+        self.assertEqual(validate("[LAB] Non officiel. Closes #1", "main", "Lab-Raven/epiverse-github-lab"), [])
 
     def test_missing_issue(self):
-        self.assertIn("Aucun lien Issue dans la PR", validate("[LAB] Non officiel", "main", "estellegiroud/epiverse-github-lab"))
+        self.assertIn("Aucun lien Issue dans la PR", validate("[LAB] Non officiel", "main", "Lab-Raven/epiverse-github-lab"))
 
     def test_reject_official_repo(self):
         self.assertIn("Workflow interdit hors du LAB", validate("[LAB] Non officiel Closes #1", "main", "epiverse-epitech/epiverse"))
 
     def test_empty(self):
-        self.assertIn("Corps PR absent", validate("", "main", "estellegiroud/epiverse-github-lab"))
+        self.assertIn("Corps PR absent", validate("", "main", "Lab-Raven/epiverse-github-lab"))
