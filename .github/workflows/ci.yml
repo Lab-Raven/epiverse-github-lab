@@ -1,0 +1,33 @@
+name: LAB - Qualité et traçabilité
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lab-ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Vérification documentaire
+        run: python scripts/verify_lab.py
+      - name: Tests unitaires
+        run: python -m unittest discover -s tests -v
+      - name: Rapport démonstratif explicitement fictif
+        run: python scripts/generate_report.py --demo --output reporting/demo-status.md
+      - name: Artefact de test privé
+        uses: actions/upload-artifact@v4
+        with:
+          name: epiverse-lab-demo
+          path: reporting/demo-status.md
+          retention-days: 7

@@ -1,0 +1,12 @@
+{
+  "_notice": "DONNÉES FICTIVES — AUCUNE MÉTRIQUE DU PROJET RÉEL",
+  "issues": [
+    {"number": 1, "title": "[LAB] tâche fictive ouverte", "state": "open", "labels": [{"name": "type:task"}], "assignees": []},
+    {"number": 2, "title": "[LAB] risque fictif bloqué", "state": "open", "labels": [{"name": "status:blocked"}], "assignees": []},
+    {"number": 3, "title": "[LAB] tâche fictive terminée", "state": "closed", "labels": [{"name": "type:task"}], "assignees": [{"login": "demo-user"}]}
+  ],
+  "pulls": [
+    {"number": 4, "state": "open", "merged_at": null},
+    {"number": 5, "state": "closed", "merged_at": "2026-11-05T00:00:00Z"}
+  ]
+}

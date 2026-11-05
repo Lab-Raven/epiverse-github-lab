@@ -1,0 +1,62 @@
+name: LAB - Initialiser labels et jalons
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Vérifier la cible privée et initialiser uniquement ce dépôt
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$REPO" = "estellegiroud/epiverse-github-lab"
+          test "$(gh api "repos/$REPO" --jq '.private')" = "true"
+          while IFS='|' read -r name color; do
+            test -n "$name" || continue
+            if gh api "repos/$REPO/labels?per_page=100" --jq '.[].name' | grep -Fxq "$name"; then
+              echo "Déjà présent : $name"
+            else
+              gh api --method POST "repos/$REPO/labels" -f "name=$name" -f "color=$color" >/dev/null
+              echo "Créé : $name"
+            fi
+          done <<'LABELS'
+          type:feature|0969da
+          type:task|8250df
+          type:bug|d73a4a
+          type:risk|e99695
+          type:decision|bf8700
+          priority:P0|b60205
+          priority:P1|d93f0b
+          priority:P2|fbca04
+          priority:P3|0e8a16
+          status:backlog|cfd3d7
+          status:blocked|d73a4a
+          domain:frontend|1d76db
+          domain:backend|1d76db
+          domain:2.5d|0e8a16
+          domain:data|1d76db
+          domain:security|b60205
+          domain:devops|1d76db
+          domain:governance|5319e7
+          LABELS
+          while IFS= read -r title; do
+            test -n "$title" || continue
+            if gh api "repos/$REPO/milestones?state=all&per_page=100" --jq '.[].title' | grep -Fxq "$title"; then
+              echo "Jalon déjà présent : $title"
+            else
+              gh api --method POST "repos/$REPO/milestones" -f "title=$title" >/dev/null
+              echo "Jalon créé : $title"
+            fi
+          done <<'MILESTONES'
+          [LAB] Sprint 0 — gouvernance
+          [LAB] Sprint 1 — qualité et PR
+          [LAB] Recette pédagogique
+          MILESTONES
+          echo "Initialisation du LAB réussie, dépôt officiel non modifié." >> "$GITHUB_STEP_SUMMARY"

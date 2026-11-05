@@ -1,0 +1,30 @@
+name: LAB - Rapport pédagogique
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Générer uniquement l'état réel du dépôt de LAB
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          test "$REPO" = "estellegiroud/epiverse-github-lab"
+          python scripts/generate_report.py --github --repo "$REPO" --output reporting/lab-current.md
+          cat reporting/lab-current.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Conserver le rapport comme artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab-current-report
+          path: reporting/lab-current.md
+          retention-days: 14

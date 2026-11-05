@@ -1,0 +1,21 @@
+name: LAB - Archive de test (sans release publique)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Générer l'archive de test
+        run: |
+          test "$GITHUB_REPOSITORY" = "estellegiroud/epiverse-github-lab"
+          git archive --format=zip --output=epiverse-lab-source.zip HEAD
+          echo "Archive de simulation : aucune release, package public ou déploiement." >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lab-source
+          path: epiverse-lab-source.zip
+          retention-days: 7
