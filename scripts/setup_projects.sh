@@ -24,15 +24,26 @@ echo "GitHub CLI doit disposer du scope 'project' (gh auth refresh -s project)."
 printf "Taper INSTALLER LAB pour confirmer : "
 read -r ANSWER
 [ "$ANSWER" = "INSTALLER LAB" ] || { echo "Annulé"; exit 5; }
-NUMBER="$(gh project list --owner "$OWNER" --format json --jq '.projects[]? | select(.title == "EpiVerse — LAB privé (non officiel)") | .number' | head -n 1)"
-if [ -z "$NUMBER" ]; then
-  NUMBER="$(gh project create --owner "$OWNER" --title "$TITLE" --format json --jq '.number')"
-  echo "Project créé : $NUMBER"
-else
-  echo "Project existant réutilisé : $NUMBER"
-fi
-[ -n "$NUMBER" ] || { echo "Numéro de Project non obtenu" >&2; exit 6; }
-gh project edit "$NUMBER" --owner "$OWNER" --visibility PRIVATE --description "LAB privé de simulation des rituels EpiVerse, sans aucune métrique produit ni membre invité."
+# Le Project #1 a déjà été créé par l'utilisatrice dans Lab-Raven (5 novembre 2026).
+# Réutiliser exclusivement ce Project : aucun nouveau Project créé automatiquement.
+NUMBER="1"
+CURRENT_TITLE="$(gh project view "$NUMBER" --owner "$OWNER" --format json --jq '.title')" || {
+  echo "Impossible de lire le Project #1 : vérifier le scope project et les droits dans Lab-Raven." >&2
+  exit 6
+}
+case "$CURRENT_TITLE" in
+  "$TITLE"|*"untitled project"*)
+    echo "Project #1 reconnu : $CURRENT_TITLE"
+    ;;
+  *)
+    echo "Refus de renommer le Project #1 : titre inattendu ($CURRENT_TITLE)." >&2
+    echo "Examiner https://github.com/orgs/Lab-Raven/projects/1 avant toute modification." >&2
+    exit 7
+    ;;
+esac
+gh project edit "$NUMBER" --owner "$OWNER" --title "$TITLE" --visibility PRIVATE \
+  --description "LAB privé de simulation des rituels EpiVerse, sans métrique produit ni membre invité."
+echo "Projet Lab-Raven #1 renommé et visibilité PRIVATE demandée."
 gh project link "$NUMBER" --owner "$OWNER" --repo "$REPO" || echo "Lien déjà présent ou à contrôler dans l'interface."
 has_field() {
   gh project field-list "$NUMBER" --owner "$OWNER" --format json --jq '.fields[].name' | grep -Fxq "$1"
