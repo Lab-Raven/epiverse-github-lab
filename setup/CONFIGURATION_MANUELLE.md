@@ -18,7 +18,7 @@ cd epiverse-github-lab
 git fetch origin fix/lab-raven-org-migration
 git switch fix/lab-raven-org-migration
 bash scripts/setup_projects.sh --dry-run
-bash scripts/setup_projects.sh --apply
+bash scripts/setup_projects.sh --apply  # réutilise le Project existant #1, sans doublon
 ```
 - Ouvrir https://github.com/orgs/Lab-Raven/projects et vérifier que le Project est **PRIVATE**.
 - Compléter les 10 vues et champs `Status`, `Iteration` dans l'interface (voir `setup/PROJECTS_VUES.md`).
@@ -79,3 +79,18 @@ Le script vérifie la visibilité PRIVATE et le compte `estellegiroud`, puis gui
 - **Dependabot** : PR de mises à jour majeures existantes, non fusionnées automatiquement ; vérifier la compatibilité et les checks.
 
 Le contrôle `LAB - Privacy gate` ajouté par la PR #36 reste volontairement rouge tant que le dépôt est PUBLIC. Après passage PRIVATE, relancer le run, puis fusionner la PR uniquement si les contrôles sont verts.
+
+## H. Project d'organisation déjà créé : **#1**
+
+Le 5 novembre 2026, le Project https://github.com/orgs/Lab-Raven/projects/1 existe avec le titre initial `@estellegiroud's untitled project`. Il ne faut **pas créer d'autre Project**.
+
+1. Dans son menu `… → Settings`, choisir le titre **EpiVerse — LAB privé (non officiel)** et la visibilité **Private**.
+2. Lier le projet au dépôt `Lab-Raven/epiverse-github-lab` depuis le Project (Settings / Manage access / Linked repositories selon interface), ou depuis le dépôt `Projects → Link a project`.
+3. Une fois le dépôt PRIVATE, exécuter `bash scripts/setup_projects.sh --apply` : le script réutilise exclusivement **#1**, refuse de renommer un projet portant un titre inattendu, crée les champs et rattache les Issues.
+4. Mettre en forme les vues dans l'interface : Portfolio, Kanban, Sprint, Roadmap, Par domaine, Par personne, Risques, QA, Livraisons et Pédagogie.
+
+## I. Wiki et Discussion sur les écrans déjà ouverts
+
+- Wiki : `Create the first page` → Title `Home` → reprendre le contenu de `wiki-content/Home.md` (dans la PR #36) → enregistrer **seulement une fois le dépôt privé** ; le script `publish_wiki.sh` pourra ensuite synchroniser la sidebar.
+- Discussions : choisir `Announcements` (catégorie réservée aux maintainers) → titre `[LAB] Bienvenue — règles, idées et suivi` → texte sans information privée. Préférer Q&A pour les questions et Ideas pour les propositions.
+- Actions : l'échec de `LAB - Privacy gate` est un test attendu tant que le dépôt demeure PUBLIC, pas une panne du workflow.
