@@ -49,3 +49,33 @@ bash scripts/setup_repo_features.sh --apply
 
 ## F. Critères de recette
 L'ensemble est prêt seulement lorsque les réglages privés, le Project, les champs/vues, les tickets, les revues, les alertes de sécurité et les runs CI ont été **observés**, et non seulement documentés. Consigner les preuves dans `docs/quality/EVIDENCE.md`.
+
+
+## G. Installation locale regroupée (option la plus rapide)
+
+Après changement manuel de visibilité en PRIVATE et fusion de la PR #36 :
+
+```bash
+brew install gh jq
+gh auth login
+gh auth refresh -s project
+gh repo clone Lab-Raven/epiverse-github-lab
+cd epiverse-github-lab
+bash scripts/complete_lab.sh --dry-run
+bash scripts/complete_lab.sh --apply
+```
+
+Le script vérifie la visibilité PRIVATE et le compte `estellegiroud`, puis guide l'installation de labels (avec couleurs), jalons, Project v2, fonctionnalités du dépôt, Teams **sans membres** et environnement de simulation. Les sous-commandes demandent leurs propres confirmations. Les vues du Project, la première page Wiki, les options de sécurité natives et les rulesets restent des étapes UI à vérifier.
+
+### Contrôles depuis les captures du 5 novembre 2026
+
+- **Projects** : 0 lié au dépôt, à créer via https://github.com/orgs/Lab-Raven/projects (ou le script `setup_projects.sh`).
+- **Discussions** : catégories créées par GitHub ; aucun premier sujet.
+- **Wiki** : actif mais vide ; créer `Home` dans l'interface, puis `bash scripts/publish_wiki.sh --apply`.
+- **Security and quality** : Security policy et Security advisories activées ; Dependabot alerts, Secret scanning alerts et Code quality désactivés ; Code scanning à configurer.
+- **Settings / About** : renseigner une description explicite du LAB, sans nom ni donnée privée de l'équipe.
+- **Insights** : chiffres de démonstration concernant le LAB, pas un score d'avancement du projet.
+- **Branch rules** : `main` non protégée ; GitHub Team/Enterprise peut être nécessaire pour appliquer les rulesets à un dépôt privé d'organisation.
+- **Dependabot** : PR de mises à jour majeures existantes, non fusionnées automatiquement ; vérifier la compatibilité et les checks.
+
+Le contrôle `LAB - Privacy gate` ajouté par la PR #36 reste volontairement rouge tant que le dépôt est PUBLIC. Après passage PRIVATE, relancer le run, puis fusionner la PR uniquement si les contrôles sont verts.
