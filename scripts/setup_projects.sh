@@ -42,7 +42,8 @@ case "$CURRENT_TITLE" in
     ;;
 esac
 gh project edit "$NUMBER" --owner "$OWNER" --title "$TITLE" --visibility PRIVATE \
-  --description "LAB privé de simulation des rituels EpiVerse, sans métrique produit ni membre invité."
+  --description "Laboratoire privé de gouvernance, planification, CI/CD et sécurité GitHub EpiVerse (non officiel)." \
+  --readme "$(cat setup/PROJECT_README.md)"
 echo "Projet Lab-Raven #1 renommé et visibilité PRIVATE demandée."
 gh project link "$NUMBER" --owner "$OWNER" --repo "$REPO" || echo "Lien déjà présent ou à contrôler dans l'interface."
 has_field() {
