@@ -1,0 +1,3 @@
+# LAB privé : validation uniquement par la propriétaire vérifiée.
+# ATTENTION : en mono-utilisateur, une revue CODEOWNER obligatoire peut bloquer les merges.
+* @estellegiroud
